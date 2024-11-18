@@ -4,7 +4,7 @@ set -e
 for item in 'cilium' 'coredns'; do
     echo -e "\n› Installing ${item} helm release"
 
-    manifest=$(kubectl kustomize infrastructure/envs/home/${item})
+    manifest=$(kubectl kustomize infrastructure/home/${item})
 
     version=$(this=$manifest yq --null-input 'env(this) | select(.kind == "Application") | .spec.source.targetRevision')
     repo_url=$(this=$manifest yq --null-input 'env(this) | select(.kind == "Application") | .spec.source.repoURL')
