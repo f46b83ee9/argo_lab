@@ -43,7 +43,7 @@ spec:
       project: infrastructure
       source:
         repoURL: https://github.com/f46b83ee9/argo_lab.git
-        targetRevision: HEAD
+        targetRevision: feat/cnpg
         path: '{{.path.path}}'
       destination:
         server: https://kubernetes.default.svc
