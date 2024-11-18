@@ -13,6 +13,7 @@ spec:
           backupTargetCredentialSecret: cifs-credentials
         ingress:
           enabled: true
+          ingressClassName: nginx
           annotations:
             cert-manager.io/cluster-issuer: letsencrypt-prd
             traefik.ingress.kubernetes.io/router.entrypoints: websecure
