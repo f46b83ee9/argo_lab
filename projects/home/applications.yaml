@@ -1,0 +1,56 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: applications
+  namespace: argocd
+  annotations:
+    argocd-autopilot.argoproj-labs.io/default-dest-server: https://kubernetes.default.svc
+    argocd.argoproj.io/sync-options: PruneLast=true
+spec:
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  description: applications project
+  destinations:
+  - namespace: '*'
+    server: '*'
+  namespaceResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  sourceRepos:
+  - '*'
+
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: applications
+  namespace: argocd
+  labels:
+    app.kubernetes.io/managed-by: argocd-autopilot
+    app.kubernetes.io/name: root
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: applications
+
+  ignoreDifferences:
+  - group: argoproj.io
+    jsonPointers:
+    - /status
+    kind: Application
+
+  syncPolicy:
+    automated:
+      allowEmpty: true
+      prune: true
+      selfHeal: true
+
+  source:
+    repoURL: https://github.com/f46b83ee9/argo_lab.git
+    path: apps/home
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd

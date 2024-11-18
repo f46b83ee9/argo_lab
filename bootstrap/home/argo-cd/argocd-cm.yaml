@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-cm
+data:
+  timeout.reconciliation: 15s
+  application.instanceLabelKey: argocd.argoproj.io/instance
+  resource.exclusions: |
+    - apiGroups:
+        - cilium.io
+      kinds:
+        - CiliumIdentity
+      clusters:
+        - "*"
+  url: https://argocd.vfd.ovh

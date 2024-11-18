@@ -1,0 +1,64 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: infrastructure
+  namespace: argocd
+  annotations:
+    argocd-autopilot.argoproj-labs.io/default-dest-server: https://kubernetes.default.svc
+    argocd.argoproj.io/sync-options: PruneLast=true
+spec:
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  description: infrastructure Project
+  destinations:
+  - namespace: '*'
+    server: '*'
+  namespaceResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  sourceRepos:
+  - '*'
+
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: infrastructure
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+  - git:
+      repoURL: https://github.com/f46b83ee9/argo_lab.git
+      revision: HEAD
+      directories:
+      - path: infrastructure/home/*
+  template:
+    metadata:
+      name: '{{.path.basename}}-app'
+    spec:
+      project: infrastructure
+      source:
+        repoURL: https://github.com/f46b83ee9/argo_lab.git
+        targetRevision: HEAD
+        path: '{{.path.path}}'
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: argocd
+
+      ignoreDifferences:
+      - group: argoproj.io
+        jsonPointers:
+        - /status
+        kind: Application
+
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+        automated:
+          allowEmpty: true
+          prune: true
+          selfHeal: true

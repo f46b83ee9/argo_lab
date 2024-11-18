@@ -1,0 +1,38 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cilium
+  namespace: argocd
+spec:
+  project: infrastructure 
+
+  ignoreDifferences:
+  - group: argoproj.io
+    jsonPointers:
+    - /status
+    kind: Application
+
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      allowEmpty: true
+      prune: true
+      selfHeal: true
+
+  source:
+    chart: cilium
+    repoURL: https://helm.cilium.io/
+    targetRevision: 1.16.3
+    helm:
+      valuesObject:
+        bpf:
+          masquerade: true
+          datapathMode: netkit
+        envoy:
+          enabled: false
+
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: kube-system

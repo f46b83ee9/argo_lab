@@ -1,0 +1,48 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: vaultwarden
+  namespace: argocd
+spec:
+  project: applications 
+
+  ignoreDifferences:
+  - group: argoproj.io
+    jsonPointers:
+    - /status
+    kind: Application
+
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      allowEmpty: true
+      prune: true
+      selfHeal: true
+
+  source:
+    chart: vaultwarden
+    repoURL: https://guerzon.github.io/vaultwarden
+    targetRevision: v0.29.3
+    helm:
+      domain: https://vaultwarden.vfd.ovh
+
+      data:
+        name: vaultwarden-data
+        size: 15Gi
+        class: longhorn
+        accessMode: ReadWriteOnce
+        keepPvc: true
+
+      ingress:
+        enabled: true
+        hostname: vaultwarden.vfd.ovh
+        tls: true
+        tlsSecret: vaultwarden-vfd-tls
+        additionalAnnotations:
+          cert-manager.io/cluster-issuer: letsencrypt-prd
+
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: vaultwarden

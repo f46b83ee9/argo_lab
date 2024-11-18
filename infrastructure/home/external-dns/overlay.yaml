@@ -1,0 +1,46 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: external-dns
+  namespace: argocd
+spec:
+  source:
+    helm:
+      valuesObject:
+        provider:
+          name: rfc2136
+
+        domainFilters: 
+          - vfd.ovh
+
+        sources:
+          - service
+          - ingress
+
+        extraArgs: 
+          - --rfc2136-host=192.168.10.230
+          - --rfc2136-port=5353
+          - --rfc2136-zone=vfd.ovh
+          - --rfc2136-tsig-secret=$(RFC2136_SECRET)
+          - --rfc2136-tsig-secret-alg=$(RFC2136_SECRET_ALG)
+          - --rfc2136-tsig-keyname=$(RFC2136_KEYNAME)
+          - --rfc2136-tsig-axfr
+          - --traefik-disable-legacy
+        
+        env:
+          - name: RFC2136_KEYNAME
+            valueFrom:
+              secretKeyRef:
+                name: rfc2136-credentials
+                key: keyname
+          - name: RFC2136_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: rfc2136-credentials
+                key: secret
+          - name: RFC2136_SECRET_ALG
+            valueFrom:
+              secretKeyRef:
+                name: rfc2136-credentials
+                key: secret-alg
