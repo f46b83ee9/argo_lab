@@ -33,7 +33,7 @@ spec:
   generators:
   - git:
       repoURL: https://github.com/f46b83ee9/argo_lab.git
-      revision: HEAD
+      revision: feat/cnpg
       directories:
       - path: infrastructure/home/*
   template:
