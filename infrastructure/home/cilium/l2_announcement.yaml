@@ -4,6 +4,8 @@ kind: CiliumL2AnnouncementPolicy
 metadata:
   name: main
   namespace: kube-system
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   externalIPs: true
   loadBalancerIPs: true
