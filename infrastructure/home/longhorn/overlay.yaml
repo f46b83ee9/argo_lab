@@ -16,7 +16,6 @@ spec:
           ingressClassName: nginx
           annotations:
             cert-manager.io/cluster-issuer: letsencrypt-prd
-            traefik.ingress.kubernetes.io/router.entrypoints: websecure
           host: longhorn.vfd.ovh
           tls: true
           tlsSecret: longhorn-vfd-tls
