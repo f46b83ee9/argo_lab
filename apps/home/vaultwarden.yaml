@@ -26,22 +26,23 @@ spec:
     repoURL: https://guerzon.github.io/vaultwarden
     targetRevision: 0.30.1
     helm:
-      domain: https://vaultwarden.vfd.ovh
+      valuesObject:
+        domain: https://vaultwarden.vfd.ovh
 
-      data:
-        name: vaultwarden-data
-        size: 15Gi
-        class: longhorn
-        accessMode: ReadWriteOnce
-        keepPvc: true
+        data:
+          name: vaultwarden-data
+          size: 15Gi
+          class: longhorn
+          accessMode: ReadWriteOnce
+          keepPvc: true
 
-      ingress:
-        enabled: true
-        hostname: vaultwarden.vfd.ovh
-        tls: true
-        tlsSecret: vaultwarden-vfd-tls
-        additionalAnnotations:
-          cert-manager.io/cluster-issuer: letsencrypt-prd
+        ingress:
+          enabled: true
+          hostname: vaultwarden.vfd.ovh
+          tls: true
+          tlsSecret: vaultwarden-vfd-tls
+          additionalAnnotations:
+            cert-manager.io/cluster-issuer: letsencrypt-prd
 
   destination:
     server: "https://kubernetes.default.svc"
