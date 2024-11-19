@@ -1,0 +1,27 @@
+{{- range .Values.services }}
+{{- $port := include "external-services.get-port" . }}
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: {{ .name }}
+  namespace: {{ $.Release.Namespace }}
+  annotations:
+    {{- with $.Values.annotations.global }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+    {{- with $.Values.annotations.endpoint }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}    
+    {{- with .annotations | default (dict) }}
+        {{- with .endpoint }}
+            {{- toYaml . | nindent 4 }}
+        {{- end }}
+    {{- end }}
+subsets:
+  - addresses:
+      - ip: {{ .ip }}
+    ports:
+      - port: {{ $port }}
+---
+{{- end }}

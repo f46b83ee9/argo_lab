@@ -1,0 +1,111 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+        "domain": {
+            "type": "string",
+            "description": "Le domaine principal utilisé pour générer les hôtes des services"
+        },
+        "services": {
+            "type": "array",
+            "description": "Liste des services à exposer via DNS",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Le nom du service"
+                    },
+                    "host": {
+                        "type": "string",
+                        "description": "Le nom d'hôte du service (optionnel, généré dynamiquement si absent)"
+                    },
+                    "protocol": {
+                        "type": "string",
+                        "enum": [
+                            "http",
+                            "https"
+                        ],
+                        "description": "Le protocole utilisé pour le service. Doit être 'http' ou 'https'."
+                    },
+                    "port": {
+                        "type": "integer",
+                        "description": "Le port du service (si non défini, le port par défaut sera utilisé)"
+                    },
+                    "ip": {
+                        "type": "string",
+                        "format": "ipv4",
+                        "description": "L'adresse IP du service"
+                    },
+                    "annotations": {
+                        "type": "object",
+                        "properties": {
+                            "service": {
+                                "type": "object",
+                                "description": "Annotations spécifiques au service"
+                            },
+                            "ingress": {
+                                "type": "object",
+                                "description": "Annotations spécifiques à l'Ingress"
+                            },
+                            "endpoint": {
+                                "type": "object",
+                                "description": "Annotations spécifiques à l'Endpoint"
+                            }
+                        },
+                        "additionalProperties": true
+                    },
+                    "tls": {
+                        "type": "object",
+                        "properties": {
+                            "enabled": {
+                                "type": "boolean",
+                                "description": "Indique si TLS doit être activé pour l'Ingress"
+                            },
+                            "secretName": {
+                                "type": "string",
+                                "description": "Le nom du secret TLS utilisé"
+                            }
+                        },
+                        "required": [
+                            "enabled"
+                        ],
+                        "additionalProperties": false
+                    }
+                },
+                "required": [
+                    "name",
+                    "protocol",
+                    "ip"
+                ]
+            }
+        },
+        "annotations": {
+            "type": "object",
+            "properties": {
+                "global": {
+                    "type": "object",
+                    "description": "Annotations globales qui peuvent être appliquées à tous les services"
+                },
+                "service": {
+                    "type": "object",
+                    "description": "Annotations par défaut pour les services"
+                },
+                "ingress": {
+                    "type": "object",
+                    "description": "Annotations par défaut pour les Ingress"
+                },
+                "endpoint": {
+                    "type": "object",
+                    "description": "Annotations par défaut pour les Endpoints"
+                }
+            },
+            "additionalProperties": true
+        }
+    },
+    "required": [
+        "domain",
+        "services"
+    ],
+    "additionalProperties": false
+}

@@ -1,0 +1,9 @@
+annotations:
+  global: {}
+  service: {}
+  endpoint: {}
+  ingress: {}
+
+domain:
+
+services: []

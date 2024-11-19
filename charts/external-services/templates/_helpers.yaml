@@ -1,0 +1,11 @@
+{{- define "external-services.get-port" -}}
+  {{- $protocol := .protocol -}}
+  {{- $port := .port -}}
+  {{- if eq $protocol "https" -}}
+    {{- $port | default "443" -}}
+  {{- else if eq $protocol "http" -}}
+    {{- $port | default "80" -}}
+  {{- else -}}
+    {{- fail (printf "Invalid protocol: must be 'http' or 'https', got '%s'" $protocol) -}}
+  {{- end -}}
+{{- end -}}

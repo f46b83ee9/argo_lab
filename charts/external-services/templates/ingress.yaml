@@ -1,0 +1,46 @@
+{{- range .Values.services }}
+{{- $port := include "external-services.get-port" . }}
+{{- $host := .host | default (printf "%s.%s" .name $.Values.domain) -}}
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .name }}
+  namespace: {{ $.Release.Namespace }}
+  annotations:
+    {{- with $.Values.annotations.global }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+    {{- with $.Values.annotations.ingress }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+    {{- with .annotations | default (dict) }}
+        {{- with .ingress }}
+            {{- toYaml . | nindent 4 }}
+        {{- end }}
+    {{- end }}
+    {{- if eq .protocol "https" }}
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    nginx.ingress.kubernetes.io/ssl-verify: "false"
+    {{- end }}
+spec:
+  ingressClassName: nginx
+  {{- if .tls.enabled }}
+  tls:
+    - hosts:
+        - {{ $host }}
+      secretName: {{ .tls.secretName | default (printf "%s-tls" .name) }}
+  {{- end }}
+  rules:
+    - host: {{ $host }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .name }}
+                port:
+                  number: {{ $port }}
+---
+{{- end }}
