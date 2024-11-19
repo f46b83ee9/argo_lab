@@ -33,7 +33,7 @@ spec:
   generators:
   - git:
       repoURL: https://github.com/f46b83ee9/argo_lab.git
-      revision: feat/cnpg
+      revision: HEAD
       directories:
       - path: infrastructure/home/*
   template:
@@ -43,7 +43,7 @@ spec:
       project: infrastructure
       source:
         repoURL: https://github.com/f46b83ee9/argo_lab.git
-        targetRevision: feat/cnpg
+        targetRevision: HEAD
         path: '{{.path.path}}'
       destination:
         server: https://kubernetes.default.svc
