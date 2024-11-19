@@ -1,7 +1,7 @@
 annotations:
   global: {}
-  serivce: {}
-  endpoints: {}
+  service: {}
+  endpoint: {}
   ingress: {}
 
 domain:
