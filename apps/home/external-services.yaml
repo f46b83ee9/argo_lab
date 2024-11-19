@@ -1,0 +1,56 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: external-services
+  namespace: argocd
+spec:
+  project: applications
+
+  ignoreDifferences:
+  - group: argoproj.io
+    jsonPointers:
+    - /status
+    kind: Application
+
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    automated:
+      allowEmpty: true
+      prune: true
+      selfHeal: true
+
+  source:
+    repoURL: https://github.com/f46b83ee9/argo_lab.git
+    path: charts/external-services
+    targetRevision: feat/external-services
+    helm:
+      valuesObject:
+        annotations:
+          ingress:
+            cert-manager.io/cluster-issuer: letsencrypt-prd
+
+        domain: vfd.ovh
+
+        services:
+        - name: nas-m
+          ip: 192.168.10.252
+          port: 5002
+          protocol: https
+          tls:
+            enabled: true
+        - name: printer-m
+          ip: 192.168.10.155
+          protocol: http
+          tls:
+            enabled: true
+        - name: router
+          ip: 192.168.10.254
+          protocol: https
+          tls:
+            enabled: true
+
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: external-services

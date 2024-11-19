@@ -1,0 +1,25 @@
+{{- range .Values.services }}
+{{- $port := include "external-services.get-port" . }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .name }}
+  namespace: {{ $.Release.Namespace }}
+  annotations:
+    {{- with $.Values.annotations.global }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+    {{- with $.Values.annotations.service }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}  
+    {{- with .annotations.service }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+spec:
+  ports:
+    - port: {{ $port }}
+      targetPort: {{ $port }}
+      protocol: TCP
+  clusterIP: None
+{{- end }}
