@@ -36,7 +36,7 @@ spec:
         services:
         - name: nas-m
           ip: 192.168.10.251
-          port: 5002
+          port: 5001
           protocol: https
           tls:
             enabled: true
