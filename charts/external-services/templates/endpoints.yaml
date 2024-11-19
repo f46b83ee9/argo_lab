@@ -1,3 +1,5 @@
+{{- range .Values.services }}
+{{- $port := include "external-services.get-port" . }}
 ---
 apiVersion: v1
 kind: Endpoints
@@ -19,3 +21,4 @@ subsets:
       - ip: {{ .ip }}
     ports:
       - port: {{ $port }}
+{{- end }}
