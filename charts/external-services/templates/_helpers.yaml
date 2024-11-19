@@ -11,5 +11,5 @@
 {{- end -}}
 
 {{- define "external-services.get-hostname" -}}
-  {{- .host | default (printf "%s.%s" .name $.Values.domain -}}
+  {{- .host | default (printf "%s.%s" .name $.Values.domain) -}}
 {{- end -}}
