@@ -23,4 +23,5 @@ subsets:
       - ip: {{ .ip }}
     ports:
       - port: {{ $port }}
+---
 {{- end }}

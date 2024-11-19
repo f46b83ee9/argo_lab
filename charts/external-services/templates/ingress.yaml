@@ -42,4 +42,5 @@ spec:
                 name: {{ .name }}
                 port:
                   number: {{ $port }}
+---
 {{- end }}

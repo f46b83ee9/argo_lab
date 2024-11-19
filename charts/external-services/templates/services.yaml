@@ -24,4 +24,5 @@ spec:
       targetPort: {{ $port }}
       protocol: TCP
   clusterIP: None
+---
 {{- end }}
