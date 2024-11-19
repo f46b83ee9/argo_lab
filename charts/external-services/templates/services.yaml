@@ -13,7 +13,7 @@ metadata:
     {{- with $.Values.annotations.service }}
       {{- toYaml . | nindent 4 }}
     {{- end }}  
-    {{- with .annotations.service }}
+    {{- with .annotations.service | | default (dict) }}
       {{- toYaml . | nindent 4 }}
     {{- end }}
 spec:

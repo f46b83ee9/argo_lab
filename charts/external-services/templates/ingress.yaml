@@ -14,7 +14,7 @@ metadata:
     {{- with $.Values.annotations.ingress }}
       {{- toYaml . | nindent 4 }}
     {{- end }}
-    {{- with .annotations.ingress }}
+    {{- with .annotations.ingress | default (dict) }}
       {{- toYaml . | nindent 4 }}
     {{- end }}
     {{- if eq .protocol "https" }}

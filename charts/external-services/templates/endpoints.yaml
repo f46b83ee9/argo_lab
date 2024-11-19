@@ -13,7 +13,7 @@ metadata:
     {{- with $.Values.annotations.endpoint }}
       {{- toYaml . | nindent 4 }}
     {{- end }}    
-    {{- with .annotations.endpoint }}
+    {{- with .annotations.endpoint | default (dict) }}
       {{- toYaml . | nindent 4 }}
     {{- end }}
 subsets:
