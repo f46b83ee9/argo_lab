@@ -24,7 +24,7 @@ spec:
   source:
     repoURL: https://github.com/f46b83ee9/argo_lab.git
     path: charts/external-services
-    targetRevision: feat/external-services
+    targetRevision: HEAD
     helm:
       valuesObject:
         annotations:
