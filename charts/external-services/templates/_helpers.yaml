@@ -9,7 +9,3 @@
     {{- fail (printf "Invalid protocol: must be 'http' or 'https', got '%s'" $protocol) -}}
   {{- end -}}
 {{- end -}}
-
-{{- define "external-services.get-hostname" -}}
-  {{- .host | default (printf "%s.%s" .name $.Values.domain) -}}
-{{- end -}}

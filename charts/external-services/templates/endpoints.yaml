@@ -13,8 +13,10 @@ metadata:
     {{- with $.Values.annotations.endpoint }}
       {{- toYaml . | nindent 4 }}
     {{- end }}    
-    {{- with .annotations.endpoint | default "" }}
-      {{- toYaml . | nindent 4 }}
+    {{- with .annotations | default (dict) }}
+        {{- with .endpoint }}
+            {{- toYaml . | nindent 4 }}
+        {{- end }}
     {{- end }}
 subsets:
   - addresses:

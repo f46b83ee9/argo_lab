@@ -1,6 +1,6 @@
 {{- range .Values.services }}
 {{- $port := include "external-services.get-port" . }}
-{{- $host := include "external-services.get-hostname" . -}}
+{{- $host := .host | default (printf "%s.%s" .name $.Values.domain) -}}
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -14,8 +14,10 @@ metadata:
     {{- with $.Values.annotations.ingress }}
       {{- toYaml . | nindent 4 }}
     {{- end }}
-    {{- with .annotations.ingress | default "" }}
-      {{- toYaml . | nindent 4 }}
+    {{- with .annotations | default (dict) }}
+        {{- with .ingress }}
+            {{- toYaml . | nindent 4 }}
+        {{- end }}
     {{- end }}
     {{- if eq .protocol "https" }}
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"

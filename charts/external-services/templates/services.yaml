@@ -13,8 +13,10 @@ metadata:
     {{- with $.Values.annotations.service }}
       {{- toYaml . | nindent 4 }}
     {{- end }}  
-    {{- with .annotations.service | default "" }}
-      {{- toYaml . | nindent 4 }}
+    {{- with .annotations | default (dict) }}
+        {{- with .service }}
+            {{- toYaml . | nindent 4 }}
+        {{- end }}
     {{- end }}
 spec:
   ports:
