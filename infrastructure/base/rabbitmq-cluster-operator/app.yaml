@@ -5,7 +5,7 @@ metadata:
   name: rabbitmq-cluster-operator
   namespace: argocd
 spec:
-  project: infrastructure 
+  project: infrastructure
 
   ignoreDifferences:
   - group: argoproj.io
@@ -15,7 +15,7 @@ spec:
 
   syncPolicy:
     syncOptions:
-      - CreateNamespace=true
+    - CreateNamespace=true
     automated:
       allowEmpty: true
       prune: true
