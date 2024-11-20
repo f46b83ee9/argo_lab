@@ -1,0 +1,29 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: victoria-metrics
+  namespace: argocd
+spec:
+  source:
+    helm:
+      valuesObject:
+        server:
+          ingress:
+            enabled: true
+            ingressClassName: nginx
+            hosts:
+            - name: victoria-metrics.vfd.ovh
+              path:
+              - /
+              port: http
+            tls:
+            - secretName: victoria-metrics-vfd-tls
+              hosts:
+              - victoria-metrics.vfd.ovh
+          persistentVolume:
+            name: victoria-metrics-data
+            size: 50Gi
+            storageClassName: longhorn
+            accessModes:
+            - ReadWriteOnce
