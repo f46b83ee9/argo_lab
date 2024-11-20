@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: cert-manager
+  name: csi-driver-smb
   namespace: argocd
 spec:
   project: infrastructure
@@ -22,15 +22,10 @@ spec:
       selfHeal: true
 
   source:
-    chart: cert-manager
-    repoURL: https://charts.jetstack.io
-    targetRevision: v1.16.1
-    helm:
-      valuesObject:
-        installCRDs: true
-        prometheus:
-          enabled: false
+    chart: csi-driver-smb
+    repoURL: https://raw.githubusercontent.com/kubernetes-csi/csi-driver-smb/master/charts
+    targetRevision: v1.16.0
 
   destination:
     server: "https://kubernetes.default.svc"
-    namespace: cert-manager
+    namespace: csi-driver-smb

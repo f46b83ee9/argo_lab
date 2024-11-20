@@ -5,7 +5,7 @@ metadata:
   name: longhorn
   namespace: argocd
 spec:
-  project: infrastructure 
+  project: infrastructure
 
   ignoreDifferences:
   - group: argoproj.io
@@ -15,7 +15,7 @@ spec:
 
   syncPolicy:
     syncOptions:
-      - CreateNamespace=true
+    - CreateNamespace=true
     automated:
       allowEmpty: true
       prune: true
@@ -35,7 +35,7 @@ spec:
         persistence:
           defaultClassReplicaCount: 2
           defaultDataLocality: best-effort
-        
+
         preUpgradeChecker:
           jobEnabled: false
   destination:

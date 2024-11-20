@@ -9,4 +9,4 @@ spec:
     helm:
       valuesObject:
         service:
-            clusterIP: 198.18.0.10
+          clusterIP: 198.18.0.10
