@@ -15,14 +15,17 @@ spec:
             annotations:
               cert-manager.io/cluster-issuer: letsencrypt-prd
             hosts:
-            - name: victoria-metrics.vfd.ovh
+            - name: vm.vfd.ovh
               path:
-              - /
-              port: http
+              - /api
+            - name: vmui.vfd.ovh
+              path:
+              - /vmui
             tls:
             - secretName: victoria-metrics-vfd-tls
               hosts:
-              - victoria-metrics.vfd.ovh
+              - vmui.vfd.ovh
+              - vm.vfd.ovh
           persistentVolume:
             name: victoria-metrics-data
             size: 50Gi
