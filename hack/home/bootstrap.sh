@@ -14,6 +14,7 @@ for item in 'cilium' 'coredns'; do
     values=$(this=$manifest yq --null-input 'env(this) | select(.kind == "Application") |.spec.source.helm.valuesObject')
 
     helm repo add ${item} ${repo_url}
+    helm repo update
 
     printf "${values}" | helm upgrade --install ${name} ${item}/${chart} \
         --values - \
