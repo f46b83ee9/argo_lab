@@ -60,7 +60,7 @@ spec:
       valuesObject:
         name: igpu
         sharedDevNum: 3
-        resourceManager: false
+        resourceManager: {}
 
   destination:
     server: "https://kubernetes.default.svc"
