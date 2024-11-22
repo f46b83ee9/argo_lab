@@ -22,7 +22,7 @@ spec:
       selfHeal: true
 
   source:
-    chart: nintel-device-plugins-operator
+    chart: intel-device-plugins-operator
     repoURL: https://intel.github.io/helm-charts/
     targetRevision: 0.31.1
 
@@ -53,7 +53,7 @@ spec:
       selfHeal: true
 
   source:
-    chart: nintel-device-plugins-gpu
+    chart: intel-device-plugins-gpu
     repoURL: https://intel.github.io/helm-charts/
     targetRevision: 0.31.1
     helm:
