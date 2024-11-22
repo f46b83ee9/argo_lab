@@ -1,0 +1,59 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: jellyfin
+  namespace: argocd
+spec:
+  project: applications
+
+  ignoreDifferences:
+  - group: argoproj.io
+    jsonPointers:
+    - /status
+    kind: Application
+
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    automated:
+      allowEmpty: true
+      prune: true
+      selfHeal: true
+
+  source:
+    chart: jellyfin
+    repoURL: https://jellyfin.github.io/jellyfin-helm
+    targetRevision: 2.1.0
+    helm:
+      valuesObject:
+        resources:
+          limits:
+            gpu.intel.com/i915: 1000m
+        persistence:
+          config:
+            enabled: true
+            accessMode: ReadWriteOnce
+            storageClass: longhorn
+          media:
+            enabled: true
+            accessMode: ReadWriteOnce
+            storageClass: smb-multimedia
+        ingress:
+          enabled: true
+          className: nginx
+          annotations:
+            cert-manager.io/cluster-issuer: letsencrypt-prd
+          hosts:
+          - host: jellyfin.vfd.ovh
+            paths:
+            - path: /
+              pathType: ImplementationSpecific
+          tls:
+          - secretName: jellyfin-vfd-tls
+            hosts:
+            - jellyfin.vfd.ovh
+
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: jellyfin
