@@ -1,0 +1,66 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: intel-device-plugins-operator
+  namespace: argocd
+spec:
+  project: infrastructure
+
+  ignoreDifferences:
+  - group: argoproj.io
+    jsonPointers:
+    - /status
+    kind: Application
+
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    automated:
+      allowEmpty: true
+      prune: true
+      selfHeal: true
+
+  source:
+    chart: nintel-device-plugins-operator
+    repoURL: https://intel.github.io/helm-charts/
+    targetRevision: 0.31.1
+
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: inteldeviceplugins-system
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: intel-device-plugins-gpu
+  namespace: argocd
+spec:
+  project: infrastructure
+
+  ignoreDifferences:
+  - group: argoproj.io
+    jsonPointers:
+    - /status
+    kind: Application
+
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    automated:
+      allowEmpty: true
+      prune: true
+      selfHeal: true
+
+  source:
+    chart: nintel-device-plugins-gpu
+    repoURL: https://intel.github.io/helm-charts/
+    targetRevision: 0.31.1
+    helm:
+      valuesObject:
+        name: igpu
+        sharedDevNum: 3
+
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: inteldeviceplugins-system
