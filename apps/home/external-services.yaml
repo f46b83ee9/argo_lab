@@ -50,7 +50,7 @@ spec:
           protocol: https
           tls:
             enabled: true
-        - name: zigbee
+        - name: zigbee-m
           ip: 192.168.10.80
           protocol: http
           tls:
