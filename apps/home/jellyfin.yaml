@@ -28,7 +28,7 @@ spec:
     helm:
       valuesObject:
         podAnnotations:
-          k8s.v1.cni.cncf.io/networks: '[ { "name": "macvlan", "namespace": "kube-system", "ips": [ "192.168.10.109" ], "gateway": [ "192.168.10.254" ] }]'
+          k8s.v1.cni.cncf.io/networks: '[ { "name": "macvlan", "namespace": "kube-system", "ips": [ "192.168.10.109" ] }]'
         resources:
           limits:
             gpu.intel.com/i915: 1000m
