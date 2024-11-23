@@ -1,0 +1,36 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kata-deploy
+  namespace: argocd
+spec:
+  project: infrastructure
+
+  ignoreDifferences:
+  - group: argoproj.io
+    jsonPointers:
+    - /status
+    kind: Application
+
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    automated:
+      allowEmpty: true
+      prune: true
+      selfHeal: true
+
+  source:
+    repoURL: https://github.com/kata-containers/kata-containers.git
+    path: tools/packaging/kata-deploy/helm-chart/kata-deploy
+    targetRevision: 3.11.0
+    helm:
+      valuesObject:
+        k8sDistribution: "k3s"
+        env:
+          defaultShim: dragonball
+
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: kube-system
