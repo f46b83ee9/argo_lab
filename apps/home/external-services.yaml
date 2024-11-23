@@ -50,6 +50,11 @@ spec:
           protocol: https
           tls:
             enabled: true
+        - name: zigbee
+          ip: 192.168.10.80
+          protocol: http
+          tls:
+            enabled: true
 
   destination:
     server: "https://kubernetes.default.svc"
