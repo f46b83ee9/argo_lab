@@ -1,0 +1,31 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: emqx-operator
+  namespace: argocd
+spec:
+  project: infrastructure
+
+  ignoreDifferences:
+  - group: argoproj.io
+    jsonPointers:
+    - /status
+    kind: Application
+
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    automated:
+      allowEmpty: true
+      prune: true
+      selfHeal: true
+
+  source:
+    chart: emqx-operator
+    repoURL: https://repos.emqx.io/charts
+    targetRevision: 2.2.25
+
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: emqx-system
