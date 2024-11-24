@@ -48,6 +48,23 @@ spec:
     name: mqtt-user
 ---
 apiVersion: rabbitmq.com/v1beta1
+kind: Permission
+metadata:
+  name: permission-z2m
+  namespace: zigbee2mqtt
+spec:
+  vhost: "/"
+  userReference:
+    name: zigbee2mqtt
+  permissions:
+    configure: '^mqtt-queue$|mqtt.*'
+    write: '^(amq\.topic|mqtt-queue)$|mqtt.*'
+    read: '^(amq\.topic|mqtt-queue)$|mqtt.*'
+  rabbitmqClusterReference:
+    name: rabbitmq
+    namespace: rabbitmq
+---
+apiVersion: rabbitmq.com/v1beta1
 kind: TopicPermission
 metadata:
   name: permission-z2m-topic
