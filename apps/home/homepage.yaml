@@ -1,0 +1,228 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: homepage
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  name: homepage-secret
+  namespace: homepage
+spec:
+  encryptedData:
+    HOMEPAGE_VAR_ADGUARD_PASSWORD: AgBWwN/1wh1HkKEMTiNNOUXsiNRfOhRXFBmLUVhjLZgibjqcEMGNesBRMUfaYwNhfDMkIRBJcUJSPu+h8nNymAvb2tilajgFL1FgaqSoq/mGmAeCgVy8t0VzW0JAyRbuCjGDu1q1Cosj3JcMrhLcSgqqhWfilIFDqQW0rJ5MqWkzEDQo6e0Vx02MegSLMFfw7EN9kAt980BVIqambARnC5jUtRZ51ZtALxnT/5Qb6Vw/E1nbYT3+dIOf2+T5hU81OKqHcanqq/BizKa9fnlpwFapOfKpi+8nwFWRYK3ppGRvBgHyjKT/uY/86vAmYtMgJpj9SqFWYzEHFqcyLz5X/LMJJpGqluFiUs51gqSpTN8XzpjAyro3vJjO+OTbkHzrAbsFM56T/oONZKwR1iLSNdSw9oFFa+1lSOSRvONE+tckZrot+PG2DMcuP/wHkaMnPMM9i/90L2L/Z3cUi6vuArdeJ49UDiR3gnHjy1gHFnB7Z89uuAQyWMYf98bHy8zhkurMxGVa1srzblYIuH1G8xz/sTV3gnUYvBW/IUxehyonqPDZlvGLKWd8N8vD/0QMn30mZ4k8nHfO5dnlMiFlg2uX4ZeAI/wmongYN4HcexaOvcklvEIcDECVadYTYW0XC948+Z4tJ2wulHUmEkuUyBh7RUJsBZycVPW/C3VWWql+AxwIRZG3jjUb4SiJxQdzpQt/CRxAHfPkeRnS38j/0VfLdMDp7dLcQEQ=
+    HOMEPAGE_VAR_ADGUARD_USERNAME: AgBTqsBt2Gb6Q5BYFQYy8WEVdAZRqOGhLcPRVUHEZteJoDj+cWCY+oJwPEAbadjWqfaQMwey1wzC3gk4BTxYLNmsNuggY0RU0ImmXX8YeLcAxxRA9zmJScrjQkq8/v1xV5IBWM4EKV6hVZ1Vj7IU7CrobNyknNzehyu66OhDXIaWI4yrL5C7ZzNqVCr8KzuwnbegNu7e3jpHD+t/GkgJSMBF07hnqHqUCkxGkI+RPczKg7WM9MajX5Rh1VAAOuMoVgWYlfwvQA14g/jMQ2MZnqIsMGX2JjHzsqP7xFq0V9dBUQ47U1f1FkoGmfgMPVor1W+tE2WbTD471lP5QGgD1cQJoasuE0ybHrNHH+jHrLUkf5IlCFMmfZsEO0O6Mi9hbfp7tkjVl8WpJbeTPfelaHn9QfC9qQh9Jnhf9T68//RmFhYEyNQEAcihROg4fndtUtLdpdq3lLkkGz6bIXmfc1ztGbxaq8aQioSJYa+jFPOXD0dMf5jKnGW2CnP0bSq8sI/L/4FwIBK0EFSAtkXvC+5IBX+TnhNsq10n7rBgdyoU3HP59M38SO+bKD6pyJ2woOFq4ZLnpW46jwko+hoA8coVAUxyiw3gs9XEuCuMOEEv6Wm0iKz3Di71ak9EWOIxZ6CBkl0B8mtosyfU7uyn0Bdfao7WKNYfUYF9QNvqkhS/oqVCdVWQkmcDyg/nKnMHupSm8/d+1A==
+    HOMEPAGE_VAR_DSM_PASSWORD: AgB53OsyK/i8Hm/6OZX3bFiFXzpVYk8cn+ob4WMimTs4q2uxEJhQnzRKicAroX+h8/59arPQK0oqu9Ghk+Z5pAcdysPvMPpVxkoAg604dQZCquwQ1IKjgk2uPxrQmKQHgzWKoyNJB8RUwATgFaOMO3c8p2PjmPVxiv15iofyLMKnwuY/kt0cyAVNJkuZcuZTDohc6nmv0tq3XbzyomacucxOlJ7PFW3Pyo/8P4CFmaiFwURzZi4qJv6OPEKqKsUFmcfMQgXeFdCIwi9owjdZh+F+3DoLun0rmSFKqbuIwij9xvXk0gSTTd4Hzc7ZtkI01G/VWmyo11Ysby9Rdt/ba9m9fzf4jKsY2MoyShPlFFTZFqiuBdGqEODEsyxuy15ZQesFTJxSKYMIC1ATA5LP5Hf3DypVhX32YsChJ1Ae+4/xEuJ/BvUCoeU3q9PpHoNLEOxCCSzJILmjqD/LBfTBGTnNV+PY2LDgz607X52sSYVLmCvM5FO+Sbqt0p9dLXBekPCQI/Q2GoA4CoQHfbASgrNjRugbaGfd04Ep1lOoiqp2ymmecI8CLRDlyuoBWyyKF1wws27d0oUEHosd6838KTd9od2B3mN+tPODtAY33olS5i8zSATlUvEObondBtP+KkTVoIYn0tehOeyGexi+Zoi7oS/q//9qL9sTFgKjmPN2hxOSDT2u1bEzEbnLHqR9GEdGQJBqMWY+0muwM42nbm4UE7Yld44VllwPQSZNA2lYDSi9ySWG5A==
+    HOMEPAGE_VAR_DSM_USERNAME: AgBitYz1AgJLsX53Hs6GmU7QKJ5wAQcvPCAute7OC6dtA8yvhVkZ5c6abFAL9+HodtZGJ3Pd5NKjCV70948sfBGRUHHdtMWWMta2r2aRgi7OUJ0tk8J7jJmHiUuVwengCNbKzOpgwD8gC+7iO5LaDQkgwGjNgWwSKgS43KiLZjWMbUVn9OV4CCdioMyC6Sa2H8i/7vDorzCTebi3VlzO5VT6GUMqwekke95+x13gtojoY/P8rkUd5jWtno+ysvjdmp1SducWl+rp+Fi4yyP0sNYeS5yRuGjSF9b/0Mqmq5/Q7cu2PeitJ20aNb5GbFqa1gKltgItqaRfZ9Hz7eErf4Upldt9Uwt0JP1uo0XZniZJbfTcKHFifg/h7KTOrQwbxzvnnf2l5K3xZnttwEJuqfAoKjPkdT1N5Bn8iimAbJr2cjORWXUGDD1ynqBZ96Vc+VNZf4bIXP/JA4vc5STDi6AH4eVRPPoQOOUVIO5046WDjHDFZf8fSJWC+dnQAUpjJrqcut/CSUnozpM8qoUoAl/aZarYR52arpXw/uIadK3aJL9ukTJGXfvCEb37MpbA+pUct9uUVsDBGrSmyM6suJIaryeHNxFbJjFOif+i3hlwI6sSJNICGfdtJGEzi1iWggXa6H9d1iwtlW9A3cwrJmXkbPZL1Qj5F23El8X/TsSO8nabneR/BwQ12nhdQywzQCdaoE4D1Hn03w==
+    HOMEPAGE_VAR_JELLYFIN_KEY: AgAlLq1SovE/kRo0+r7h+zUdi7KvITzWyyTgLGrWT3geOZFTmjs277MHUANG9shQLbZdeQFilnbX6CBKarXUAEPcqjeTkDXp3uEF5s2aAk+4eECUaTi8Qv5GT4ZU3q5afpHh1UKOcUwzhJtP3YNUjcWgkNjqnYLs6Xar+me0nRmw+Ghhriq9VXmdVMhGTaNL9d9w/B+JuNKWeSZ7kohhHbr7+fT6m0UooVed7LmVgYrBNBlx9TzebTgmv/LGJAujD3tMrZwqnkG+obPNtjdno+boHzINk4bHeRfIO3+vhYTfgZr+RFHNg6reU+87tbuYfnOK/KOfYnGjMDUneJxS8g8aaKuP0YINBVEwmunVgK5EicJPbukIZUMNo5ZV2BgodPHvYbhAduvq6ihdaT+TbpfIJF38Mi2NPudBosuWlwUj5/2byKT7/ZBlSd4D5XVa2Fg6Qv9gl6WmT+Wz4wZX44x1jzVnVR8apgoaI3sEm45itx4JxhhLsP3AG8q0/8gWJgK96TnMOwLTsr0E1fcbMv11XglRtg/BYdqwY/zzzRXa7WsIzjcDU81d/TnYOLNg/BOv/usbpJkP0ZWSjsJQRgnQ7pLRAJuaLPVYKuIvgwzZgBMXjnpRMeBYr5M/dczVf1zbYz6cls0K8pWyF/uQgpEiqIaYHoRyGtuwcqtjWuGY+5NquGAcu0PDhxlz6DpYKil7KsHsiXMNSrrxSGwTwbdwc84PcDuwxyIo8RRqdmfXdA==
+  template:
+    metadata:
+      name: homepage-secret
+      namespace: homepage
+    type: Opaque
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: homepage
+  namespace: argocd
+spec:
+  project: applications
+
+  ignoreDifferences:
+  - group: argoproj.io
+    jsonPointers:
+    - /status
+    kind: Application
+
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    automated:
+      allowEmpty: true
+      prune: true
+      selfHeal: true
+
+  source:
+    chart: homepage
+    repoURL: https://jameswynn.github.io/helm-charts
+    targetRevision: 2.0.1
+    helm:
+      valuesObject:
+        config:
+          settings:
+            iconStyle: theme
+            hideVersion: true
+            target: _self
+            layout:
+            - Services:
+                header: false
+                style: row
+                columns: 3
+            - Favoris:
+                style: row
+                columns: 3
+            - Favoris2:
+                header: false
+                style: row
+                columns: 3
+            language: fr
+            providers:
+              longhorn:
+                url: https://longhorn.vfd.ovh
+          bookmarks:
+          - Favoris:
+            - Agenda:
+              - icon: mdi-calendar
+                href: https://calendar.google.com/calendar/u/0/r?pli=1
+            - Email:
+              - icon: mdi-email
+                href: https://mail.google.com/mail/
+            - Youtube:
+              - icon: si-youtube
+                href: https://youtube.com
+            - Twitch:
+              - icon: si-twitch
+                href: https://twitch.tv
+            - Cloudflare:
+              - icon: si-cloudflare
+                href: https://cloudflare.com
+            - Github:
+              - icon: si-github
+                href: https://github.com
+          - Favoris2:
+            - Convergence:
+              - icon: mdi-email
+                href: https://webmel.ac-creteil.fr
+            - Mon Lycée:
+              - icon: si-nextcloud
+                href: https://psn.monlycee.net
+            - Arena:
+              - icon: mdi-castle
+                href: https://externet.ac-creteil.fr
+            - Cyclades:
+              - icon: mdi-account-school
+                href: https://candidat.examens-concours.gouv.fr/cyccandidat/portal/
+            - Moodle Collège Sévigné:
+              - icon: si-moodle
+                href: https://moodlecollegesevigne.fr/login/index.php
+            - Bibliothèque Sainte-Geneviève:
+              - icon: mdi-library
+                href: https://bsg.univ-paris3.fr
+          services:
+          - Services:
+            - Jellyfin:
+                icon: si-jellyfin
+                href: https://jellyfin.vfd.ovh
+                widget:
+                  type: jellyfin
+                  url: https://jellyfin.vfd.ovh
+                  key: '{{HOMEPAGE_VAR_JELLYFIN_KEY}}'
+            - Adguard Home:
+                icon: si-adguard
+                href: https://ns1.vfd.ovh
+                ping: 192.168.10.230
+                widget:
+                  type: adguard
+                  url: https://ns1.vfd.ovh
+                  username: '{{HOMEPAGE_VAR_ADGUARD_USERNAME}}'
+                  password: '{{HOMEPAGE_VAR_ADGUARD_PASSWORD}}'
+            - NAS:
+                icon: si-synology
+                href: https://nas-m.vfd.ovh
+                ping: 192.168.10.251
+                widget:
+                  type: diskstation
+                  url: https://nas-m.vfd.ovh
+                  username: '{{HOMEPAGE_VAR_DSM_USERNAME}}'
+                  password: '{{HOMEPAGE_VAR_DSM_PASSWORD}}'
+            - Argo CD:
+                icon: si-argo
+                href: https://argocd.vfd.ovh
+            - Longhorn:
+                icon: si-rancher
+                href: https://longhorn.vfd.ovh
+            - Victoria Metrics:
+                icon: si-victoriametrics
+                href: https://victoria-metrics.vfd.ovh/vmui
+            - RabbitMQ:
+                icon: si-rabbitmq
+                href: https://rabbitmq-m.vfd.ovh
+            - Vaultwarden:
+                icon: si-bitwarden
+                href: https://vaultwarden.vfd.ovh
+            - Imprimante:
+                icon: mdi-printer
+                href: https://printer-m.vfd.ovh
+                ping: 192.168.10.155
+            - Zigbee:
+                icon: si-zigbee
+                href: https://zigbee-m.vfd.ovh
+                ping: 192.168.10.80
+            - Zigbee2MQTT:
+                icon: si-zigbee2mqtt
+                href: https://z2m.vfd.ovh
+            - Freebox:
+                icon: mdi-wan
+                href: https://router.vfd.ovh
+                ping: 192.168.10.254
+          widgets:
+          - datetime:
+              locale: fr
+              format:
+                dateStyle: long
+                timeStyle: short
+          - kubernetes:
+              nodes:
+                show: true
+                cpu: true
+                memory: true
+                showLabel: true
+              cluster:
+                show: true
+                cpu: true
+                memory: true
+                showLabel: true
+                label: "total"
+          - longhorn:
+              total: true
+              expanded: true
+              labels: true
+              nodes: true
+          - search:
+              provider: google
+              target: _self
+              showSearchSuggestions: true
+          kubernetes:
+            mode: cluster
+
+        serviceAccount:
+          create: true
+          name: homepage
+
+        enableRbac: true
+
+        envFrom:
+        - secretRef:
+            name: homepage-secret
+
+        ingress:
+          main:
+            enabled: true
+            ingressClassName: nginx
+            annotations:
+              cert-manager.io/cluster-issuer: letsencrypt-prd
+            hosts:
+            - host: home.vfd.ovh
+              paths:
+              - path: /
+                pathType: Prefix
+            tls:
+            - secretName: homepage-vfd-tls
+              hosts:
+              - home.vfd.ovh
+
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: homepage
