@@ -1,0 +1,155 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: zigbee2mqtt
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  name: mqtt-user
+  namespace: zigbee2mqtt
+spec:
+  encryptedData:
+    password: AgBSUwhnjb3YflDfTfvIs0ztSemSnIDARzTKnF0qBE79ZBDiNNAg+PsHrlb6yFWCmdOnGuzYu7p2rcMUh18EcQ7vFGqsBaDKCcdk1tUnJnaXPAq1PLKZxA83CHR3jLK5o8iyBG+aDC/osbdAkMcBIPFw3rjpY1D//WU5mbk+5zENuT0MI6t61HOjEtVvOIdf0h+8wyWQX0owqxY+qfdaxKpKQCs54uMlAbKM08U3EMCKY9/gVcnQ4icDu4KGETRwcIYjfLuz6Oa+g0BmXZIp9YZd45diPJyP/Bj7ejxPd4adkC8p818dXx/F1kiomf/1XhZX0ZZ+mslK8B5RJ3TtaeVapbp3G35zvMbZ3Q47pJrYAb1S8oJxKcvVc1oaGgR0kwQfPmPUtuVILGkMMMYib/LRacnucreZzKq9DtUD7SUdKV70CX2TfcCCvbEGQ/1BIuDfn4nZTgDfuRodiU18y7tLef5Wbggr84JWoSw94/ffn7b6xLgzB/Ry5zgMXbi6Sm83m88aBv9dPxl0W77AskAbq8X3o/MfujsBm+C8u/rwk8/dE95DW1IMNuXhCcGXZx5MeEzQAlxFaFlJq2jxE7Lz/kKK3whOOOiHsMh+QfyAhs0kjVygtczz1LZzrCETg6Vjg6Yp2vqy3XlO1Ke4voy7EWvaK5Lbx+/zvzHkS9fxNanvlrpIDaBMRK2AZtDkRhNWwaf8DSE/ebXvHGhXoPtZrLLnjsPfmVE=
+    username: AgApmURbEWh6f/JkMjqnpCyEqtrsuA8HXzMBuPtNSuLEq9q1Rgd2/Y4EwvbfgGEuZWfKpJmgRLYksL3akCQbgly61dX2buiPb6CXRh4GlkuoV0EpRpOcUp9+ppuBx87AnTyIDNWhK54quu6/oRuHZHSUMD5C087Ej6WDDVcmdNAR0xtV1QRoeMHhA4/JY+fkzgGrDSOSEELPLLyt9ihfjD8TAGf82GkmFI5Yo+l/bOqMUKBy2TUTyt4GBCggydIpyAhNvpJzUeD92B/rZDGJpakFuq81mA339EIRHIqnYhDHgIdVx9Z4aLnLXcXy7Q8wRQLlyKkd3PYsfhlh69/7YJWWhY28qlkhzk6Cy7eP+5xETqY1rsBKCfCRwN4BMLpBKGZ43HgWUVnenQpnp9+CO3BLS+kCUr+fAswFQA4hjDhEavbIxErU3PCmRNhL/ZFqjgLwozBXVty2qLnQNscHBsZCdLeJKliCVatAW8xa3SxAyC7Uh+c++bhIap88jrLtix797l7+Vw0D6zL9XjFDLIVq4yaUcDXk/sW630OjUF3cm9TEPcbhgtwvQMXFb+cZLU7gLrvT0pYSh/JfFmjCaGUF13bGDDHsNg+fbEDdlkuCYiyVgGZHbWxHvuA7apv5ztQbU620T/Vo5AWEuRDFufUU+za9Hqgy82rixH9+HN/fwJEQdruWWpflS8xw+VRBm6jUiKGjq9pydJDgZw==
+  template:
+    metadata:
+      name: mqtt-user
+      namespace: zigbee2mqtt
+    type: Opaque
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  name: config-secret
+  namespace: zigbee2mqtt
+spec:
+  encryptedData:
+    secret.yaml: AgAC81y6Ap2hTHiwk+2pcajidD3Ast90B8Tz3r5EtXHxrjjmyqQgogCNVU4AmhW3lvsplSLFtuVNuhFjCeMjkOpCMuPfIrBIg9StodKU6eN1BFcgQeuQ+y0AozO0IHQuGhF2xKYXAt3xp7y+Gpt7SHPqBiM5M0FWoCIQpE6A/OnQOY/AhA1qKZ69Nf3FCtYMXOHzj8mTEY7iMVoLY8wdxQM3G2gXPkXG0cLhqBzq78F+qFf0M+P47yi9F9ahVanauckXQP+3g2CH4Io9tEhfsHQ6WcAHf2wnwrOUogc9vcG4e/dI5u5mjYVsFPD+4PrpkhpzPshsFWG9gnxQxlE5vNd39qbH7vkveEmL22h3sjkWL7eysnc7EJEbTrLp4myKRDyfygyv1jOZA5jDkBl4Cjzq2VzAf19uBQeyg8/52Ot6xH1DQVpiG5CfQ2LKvSUVeLvO25rqJdmoyAc0utO++KiztCsk+pOOg2GoF7TMflTADWCHJheWaKh201megyVXOvWgruKU3auAKbo3qtoV3/v4P6OtKXA2+avkIXs/WGAqgTm61FL5MWLf8fdgkPmd2vbNEF5M8eQCieXRP2VwtnTa4OJqOMRX9X6XqnWtoTtmdQRdKR7czR7fC57Kkmb3WubsvzZkCnXgQuEhvCsgzGUQ2VSLbTnI8wIkBR5nfbnAy7oeB3j0y6sM5YbtiSCrKpsnf2KvqjMD77uzFiTquFMBIxyN6zUUN5iLfpeis7UcVHzFEyG8MDKXAJZF+u5kHiTcRj32Z8HpqfSDmzsOwfzdqddENFELS2TtgO11eXC5hyvYyb8NzOZJTjdlWKgKP6zbzY4nhA2GUkAuS3o46hjptFQdzc1iyCMPOOES2FkNRiHZ2C5ydbU0uhcf9X2knQO38FtMukruRpwICSK2ldwm4MvWWOEIkL84
+  template:
+    metadata:
+      name: config-secret
+      namespace: zigbee2mqtt
+    type: Opaque
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: User
+metadata:
+  name: zigbee2mqtt
+  namespace: zigbee2mqtt
+spec:
+  tags:
+  - mqtt
+  rabbitmqClusterReference:
+    name: rabbitmq
+    namespace: rabbitmq
+  importCredentialsSecret:
+    name: mqtt-user
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: TopicPermission
+metadata:
+  name: permission-z2m-topic
+  namespace: zigbee2mqtt
+spec:
+  vhost: "/"
+  userReference:
+    name: zigbee2mqtt
+  permissions:
+    write: "^zigbee2mqtt.#|^homeassistant.#|^homeassistant.status|^hass.status"
+    read: "^zigbee2mqtt.#|^homeassistant.#|^homeassistant.status|^hass.status"
+  rabbitmqClusterReference:
+    name: rabbitmq
+    namespace: rabbitmq
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: zigbee2mqtt
+  namespace: argocd
+spec:
+  project: applications
+
+  ignoreDifferences:
+  - group: argoproj.io
+    jsonPointers:
+    - /status
+    kind: Application
+
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    automated:
+      allowEmpty: true
+      prune: true
+      selfHeal: true
+
+  source:
+    chart: zigbee2mqtt
+    repoURL: https://charts.zigbee2mqtt.io/
+    targetRevision: 1.41.0
+    helm:
+      valuesObject:
+        image:
+          tag: 1.41.0
+        service:
+          type: ClusterIP
+        statefulset:
+          storage:
+            enabled: true
+            size: 5Gi
+            storageClassName: longhorn
+          secrets:
+            name: config-secret
+          securityContext:
+            privileged: false
+            capabilities: {}
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                - matchExpressions:
+                  - key: kubernetes.io/arch
+                    operator: In
+                    values:
+                    - arm64
+        zigbee2mqtt:
+          mqtt:
+            server: 'mqtts://rabbitmq.vfd.ovh:8883'
+            user: '!secret.yaml mqtt_username'
+            password: '!secret.yaml mqtt_password'
+            client_id: 'zigbee2mqtt'
+            version: 5
+          serial:
+            port: tcp://zigbee.vfd.ovh:6638
+            baudrate: 115200
+            adapter: zstack
+          advanced:
+            channel: 20
+            pan_id: 45597
+            ext_pan_id: [ 195, 207, 60, 191, 137, 43, 228, 166 ]
+            network_key: '!secret.yaml network_key'
+            last_seen: 'ISO_8601'
+            disable_led: false
+            transmit_power: 20
+        ingress:
+          enabled: true
+          ingressClassName: nginx
+          annotations:
+            cert-manager.io/cluster-issuer: letsencrypt-prd
+          hosts:
+          - host: z2m.vfd.ovh
+            paths:
+            - path: /
+              pathType: ImplementationSpecific
+            - path: /api
+              pathType: ImplementationSpecific
+          tls:
+          - secretName: zigbee2mqtt-vfd-tls
+            hosts:
+            - z2m.vfd.ovh
+
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: zigbee2mqtt
