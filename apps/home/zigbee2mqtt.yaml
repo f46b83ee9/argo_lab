@@ -154,7 +154,7 @@ spec:
             enabled: true
             discovery_topic: 'homeassistant'
             status_topic: 'hass/status'
-            legacy_entity_attributes: false
+            legacy_entity_attributes: true
             legacy_triggers: false
           frontend:
             url: 'https://z2m.vfd.ovh'
