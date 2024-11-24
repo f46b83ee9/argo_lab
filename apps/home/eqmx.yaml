@@ -1,0 +1,124 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: emqx
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: mqtt-tls
+  namespace: emqx
+spec:
+  dnsNames:
+  - mqtt.vfd.ovh
+  issuerRef:
+    group: cert-manager.io
+    kind: ClusterIssuer
+    name: letsencrypt-prd
+  secretName: mqtt-tls
+  usages:
+  - digital signature
+  - key encipherment
+---
+apiVersion: apps.emqx.io/v2beta1
+kind: EMQX
+metadata:
+  name: emqx
+  namespace: emqx
+spec:
+  image: emqx:5.8.2
+  config:
+    data: |
+      authorization.no_match = deny
+
+      listeners.tcp.default.enable = false
+      listeners.ws.default.enable = false
+
+      listeners.wss.default {
+        bind = "0.0.0.0:8084"
+        websocket.mqtt_path = "/mqtt"
+        ssl_options {
+          certfile = "/mounted/cert/tls.crt"
+          keyfile = "/mounted/cert/tls.key"
+        }      
+      }
+
+      listeners.ssl.default {
+        bind = "0.0.0.0:8883"
+        ssl_options {
+          certfile = "/mounted/cert/tls.crt"
+          keyfile = "/mounted/cert/tls.key"
+          gc_after_handshake = true
+          handshake_timeout = 5s
+        }
+      }
+  coreTemplate:
+    spec:
+      replicas: 3
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/arch
+                operator: In
+                values:
+                - arm64
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: apps.emqx.io/instance
+                operator: In
+                values:
+                - emqx
+            topologyKey: kubernetes.io/hostname
+      volumeClaimTemplates:
+        storageClassName: longhorn-local
+        resources:
+          requests:
+            storage: 15Gi
+        accessModes:
+        - ReadWriteOnce
+      extraVolumes:
+      - name: mqtt-tls
+        secret:
+          secretName: mqtt-tls
+      extraVolumeMounts:
+      - name: mqtt-tls
+        mountPath: /mounted/cert
+  dashboardServiceTemplate:
+    spec:
+      type: ClusterIP
+  listenersServiceTemplate:
+    metadata:
+      annotations:
+        external-dns.alpha.kubernetes.io/hostname: mqtt.vfd.ovh
+    spec:
+      type: LoadBalancer
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: emqx-dashboard
+  namespace: emqx
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prd
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: emqx.vfd.ovh
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: emqx-dashboard
+            port:
+              number: 18083
+  tls:
+  - hosts:
+    - emqx.vfd.ovh
+    secretName: emqx-vfd-tls

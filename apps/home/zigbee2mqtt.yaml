@@ -7,21 +7,6 @@ metadata:
 apiVersion: bitnami.com/v1alpha1
 kind: SealedSecret
 metadata:
-  name: mqtt-user
-  namespace: zigbee2mqtt
-spec:
-  encryptedData:
-    password: AgBSUwhnjb3YflDfTfvIs0ztSemSnIDARzTKnF0qBE79ZBDiNNAg+PsHrlb6yFWCmdOnGuzYu7p2rcMUh18EcQ7vFGqsBaDKCcdk1tUnJnaXPAq1PLKZxA83CHR3jLK5o8iyBG+aDC/osbdAkMcBIPFw3rjpY1D//WU5mbk+5zENuT0MI6t61HOjEtVvOIdf0h+8wyWQX0owqxY+qfdaxKpKQCs54uMlAbKM08U3EMCKY9/gVcnQ4icDu4KGETRwcIYjfLuz6Oa+g0BmXZIp9YZd45diPJyP/Bj7ejxPd4adkC8p818dXx/F1kiomf/1XhZX0ZZ+mslK8B5RJ3TtaeVapbp3G35zvMbZ3Q47pJrYAb1S8oJxKcvVc1oaGgR0kwQfPmPUtuVILGkMMMYib/LRacnucreZzKq9DtUD7SUdKV70CX2TfcCCvbEGQ/1BIuDfn4nZTgDfuRodiU18y7tLef5Wbggr84JWoSw94/ffn7b6xLgzB/Ry5zgMXbi6Sm83m88aBv9dPxl0W77AskAbq8X3o/MfujsBm+C8u/rwk8/dE95DW1IMNuXhCcGXZx5MeEzQAlxFaFlJq2jxE7Lz/kKK3whOOOiHsMh+QfyAhs0kjVygtczz1LZzrCETg6Vjg6Yp2vqy3XlO1Ke4voy7EWvaK5Lbx+/zvzHkS9fxNanvlrpIDaBMRK2AZtDkRhNWwaf8DSE/ebXvHGhXoPtZrLLnjsPfmVE=
-    username: AgApmURbEWh6f/JkMjqnpCyEqtrsuA8HXzMBuPtNSuLEq9q1Rgd2/Y4EwvbfgGEuZWfKpJmgRLYksL3akCQbgly61dX2buiPb6CXRh4GlkuoV0EpRpOcUp9+ppuBx87AnTyIDNWhK54quu6/oRuHZHSUMD5C087Ej6WDDVcmdNAR0xtV1QRoeMHhA4/JY+fkzgGrDSOSEELPLLyt9ihfjD8TAGf82GkmFI5Yo+l/bOqMUKBy2TUTyt4GBCggydIpyAhNvpJzUeD92B/rZDGJpakFuq81mA339EIRHIqnYhDHgIdVx9Z4aLnLXcXy7Q8wRQLlyKkd3PYsfhlh69/7YJWWhY28qlkhzk6Cy7eP+5xETqY1rsBKCfCRwN4BMLpBKGZ43HgWUVnenQpnp9+CO3BLS+kCUr+fAswFQA4hjDhEavbIxErU3PCmRNhL/ZFqjgLwozBXVty2qLnQNscHBsZCdLeJKliCVatAW8xa3SxAyC7Uh+c++bhIap88jrLtix797l7+Vw0D6zL9XjFDLIVq4yaUcDXk/sW630OjUF3cm9TEPcbhgtwvQMXFb+cZLU7gLrvT0pYSh/JfFmjCaGUF13bGDDHsNg+fbEDdlkuCYiyVgGZHbWxHvuA7apv5ztQbU620T/Vo5AWEuRDFufUU+za9Hqgy82rixH9+HN/fwJEQdruWWpflS8xw+VRBm6jUiKGjq9pydJDgZw==
-  template:
-    metadata:
-      name: mqtt-user
-      namespace: zigbee2mqtt
-    type: Opaque
----
-apiVersion: bitnami.com/v1alpha1
-kind: SealedSecret
-metadata:
   name: config-secret
   namespace: zigbee2mqtt
 spec:
@@ -32,53 +17,6 @@ spec:
       name: config-secret
       namespace: zigbee2mqtt
     type: Opaque
----
-apiVersion: rabbitmq.com/v1beta1
-kind: User
-metadata:
-  name: zigbee2mqtt
-  namespace: zigbee2mqtt
-spec:
-  tags:
-  - policymaker
-  rabbitmqClusterReference:
-    name: rabbitmq
-    namespace: rabbitmq
-  importCredentialsSecret:
-    name: mqtt-user
----
-apiVersion: rabbitmq.com/v1beta1
-kind: Permission
-metadata:
-  name: permission-z2m
-  namespace: zigbee2mqtt
-spec:
-  vhost: "/"
-  userReference:
-    name: zigbee2mqtt
-  permissions:
-    configure: '^mqtt-queue$|mqtt.*'
-    write: '^(amq\.topic|mqtt-queue)$|mqtt.*'
-    read: '^(amq\.topic|mqtt-queue)$|mqtt.*'
-  rabbitmqClusterReference:
-    name: rabbitmq
-    namespace: rabbitmq
----
-apiVersion: rabbitmq.com/v1beta1
-kind: TopicPermission
-metadata:
-  name: permission-z2m-topic
-  namespace: zigbee2mqtt
-spec:
-  vhost: "/"
-  userReference:
-    name: zigbee2mqtt
-  permissions:
-    write: "^zigbee2mqtt.#|^homeassistant.#|^hass.#"
-    read: "^zigbee2mqtt.#|^homeassistant.#|^hass.#"
-  rabbitmqClusterReference:
-    name: rabbitmq
-    namespace: rabbitmq
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
@@ -133,11 +71,11 @@ spec:
                     - arm64
         zigbee2mqtt:
           mqtt:
-            server: 'mqtts://rabbitmq.vfd.ovh:8883'
+            server: 'mqtts://mqtt.vfd.ovh:8883'
             user: '!secret.yaml mqtt_username'
             password: '!secret.yaml mqtt_password'
             client_id: 'zigbee2mqtt'
-            version: 5
+            version: 4
           serial:
             port: tcp://zigbee.vfd.ovh:6638
             baudrate: 115200
