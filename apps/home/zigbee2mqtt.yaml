@@ -150,6 +150,14 @@ spec:
             last_seen: 'ISO_8601'
             disable_led: false
             transmit_power: 20
+          homeassistant:
+            enabled: true
+            discovery_topic: 'homeassistant'
+            status_topic: 'hass/status'
+            legacy_entity_attributes: false
+            legacy_triggers: false
+          frontend:
+            url: 'https://z2m.vfd.ovh'
         ingress:
           enabled: true
           ingressClassName: nginx
