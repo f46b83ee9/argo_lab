@@ -74,8 +74,8 @@ spec:
   userReference:
     name: zigbee2mqtt
   permissions:
-    write: "^zigbee2mqtt.#|^homeassistant.#|^hass.status$"
-    read: "^zigbee2mqtt.#|^homeassistant.#|^hass.status$"
+    write: "^zigbee2mqtt.#|^homeassistant.#|^hass.#"
+    read: "^zigbee2mqtt.#|^homeassistant.#|^hass.#"
   rabbitmqClusterReference:
     name: rabbitmq
     namespace: rabbitmq
