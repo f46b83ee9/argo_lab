@@ -40,7 +40,7 @@ metadata:
   namespace: zigbee2mqtt
 spec:
   tags:
-  - mqtt
+  - policymaker
   rabbitmqClusterReference:
     name: rabbitmq
     namespace: rabbitmq
