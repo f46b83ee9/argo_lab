@@ -143,7 +143,7 @@ spec:
             topologyKey: kubernetes.io/hostname
       envFrom:
       - secretRef:
-        name: emqx-dashboard
+          name: emqx-dashboard
       volumeClaimTemplates:
         storageClassName: longhorn-local
         resources:
@@ -151,7 +151,9 @@ spec:
             storage: 5Gi
         accessModes:
         - ReadWriteOnce
-        ReclaimPolicy: Delete
+        persistentVolumeClaimRetentionPolicy:
+          whenDeleted: Delete
+          whenScaled: Delete
       extraVolumes:
       - name: mqtt-tls
         secret:
