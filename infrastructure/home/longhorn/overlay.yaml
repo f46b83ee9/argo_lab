@@ -20,7 +20,7 @@ spec:
           tls: true
           tlsSecret: longhorn-vfd-tls
         persistence:
-        recurringJobSelector:
-          enable: true
-          jobList:
-          - '{ "name": "replicated", "isGroup": true }'
+          recurringJobSelector:
+            enable: true
+            jobList:
+            - '{ "name": "replicated", "isGroup": true }'

@@ -11,7 +11,7 @@ parameters:
   fsType: ext4
   numberOfReplicas: "1"
   unmapMarkSnapChainRemoved: ignored
+  recurringJobSelector: '[ { "name": "local", "isGroup": true }]'
 volumeBindingMode: Immediate
 reclaimPolicy: Delete
 allowVolumeExpansion: true
-recurringJobSelector: '[ { "name": "local", "isGroup": true }]'
