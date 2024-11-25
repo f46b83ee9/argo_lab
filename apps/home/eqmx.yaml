@@ -39,14 +39,14 @@ apiVersion: bitnami.com/v1alpha1
 kind: SealedSecret
 metadata:
   name: emqx-users
-  namespace: eqmx
+  namespace: emqx
 spec:
   encryptedData:
     users.csv: AgBi0q3vzWZYuf14GsghJMyx9lewQUi7OShdvScM/eS5BVElYl+MK6OCbbUhxoBc2zvy1BhDdiNibxGE1+LTh87S2UiSLxu8mRQnuhUAVbjH31OtJX+0Ty82QLgUEUqZUVGbR3RfHW7IxxocugOA8EO7NtxkwpWiKesemfp3DxuEvbfssHrMOm2gvfVSATg+8dK4uhGFCeIccrz5jVRJgx/Ia3rQrGFfSHtIX2d9Mv9cUU00RDcakibB4UnvEFNyLG7r1rCZH4Ew1C9F/88RGPRi4o260yoFR166+V5zeRYYDKUQlIkl9A2AaOlnzvhidg7U80DxoQOOE3O7VkPEPhEp1NSAwRHp3TLJmFFi8toiUF22XQf1ZyzhY3Vcuy+0JCJY6LvbfTpcjdx0tSZ4Y5i8W9KKtq0ukbUvK/QP7Ut983lS2q4AyoSm3mhteZHWbt2ESFWSxKjF2+SPay4jTKJC1oxaJOfSpG2RMSXc6ZWFFWXV6yyP0zOxvrESvp9NH4S0JNSIOC+5+xyIGqhj7e/89aHVXsn1h9TQW/MjqWcf1IfQ0i4xAXTWOuQtNirZWDo3ExDHHwPYB6dHag9PJo3s3D+Tg5+zSGXR0P+UlqzrMD9yXpRDYbVNUXW+ahefZMO1Has+Tvx7SYg9OUxhbbg7WfSfz/Ez18SN+aBnEGMK09/6Xp/Pa9z+T8IKRypPJ7OirY/l1VJrEF+BYcuT4ybcOBPwC/Kl8K0OvZ/QcbLBq3vbdkq2BDOyOKHeqEnIxEoSWUoK30hwWGwh2SDpRpkQoeB4lUFUW6+l1+2IE14Rg2JLQX7k7SR85MWxMjDE0W6Kbge5YJoFGBBSWnk41g==
   template:
     metadata:
       name: emqx-users
-      namespace: eqmx
+      namespace: emqx
     type: Opaque
 ---
 apiVersion: apps.emqx.io/v2beta1
@@ -128,9 +128,10 @@ spec:
         storageClassName: longhorn-local
         resources:
           requests:
-            storage: 10Gi
+            storage: 5Gi
         accessModes:
         - ReadWriteOnce
+        persistentVolumeReclaimPolicy: Delete
       extraVolumes:
       - name: mqtt-tls
         secret:
