@@ -146,9 +146,9 @@ spec:
             - Victoria Metrics:
                 icon: si-victoriametrics
                 href: https://victoria-metrics.vfd.ovh/vmui
-            - RabbitMQ:
-                icon: si-rabbitmq
-                href: https://rabbitmq-m.vfd.ovh
+            - EMQX:
+                icon: si-mqtt
+                href: https://emqx.vfd.ovh
             - Vaultwarden:
                 icon: si-bitwarden
                 href: https://vaultwarden.vfd.ovh
@@ -160,6 +160,9 @@ spec:
                 icon: si-zigbee
                 href: https://zigbee-m.vfd.ovh
                 ping: 192.168.10.80
+            - Home Assistant:
+                icon: si-home-assistnat
+                href: https://ha.vfd.ovh
             - Zigbee2MQTT:
                 icon: si-zigbee2mqtt
                 href: https://z2m.vfd.ovh

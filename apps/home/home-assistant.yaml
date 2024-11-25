@@ -1,0 +1,86 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: home-assistant
+  namespace: argocd
+spec:
+  project: applications
+
+  ignoreDifferences:
+  - group: argoproj.io
+    jsonPointers:
+    - /status
+    kind: Application
+
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    automated:
+      allowEmpty: true
+      prune: true
+      selfHeal: true
+
+  source:
+    chart: home-assistant
+    repoURL: http://pajikos.github.io/home-assistant-helm-chart/
+    targetRevision: 0.2.89
+    helm:
+      valuesObject:
+        podAnnotations:
+          k8s.v1.cni.cncf.io/networks: '[ { "name": "macvlan", "namespace": "kube-system", "ips": [ "192.168.10.231" ] }]'
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: kubernetes.io/arch
+                  operator: In
+                  values:
+                  - arm64
+        persistence:
+          enabled: true
+          accessMode: ReadWriteOnce
+          storageClass: longhorn
+          size: 10Gi
+        ingress:
+          enabled: true
+          className: nginx
+          annotations:
+            cert-manager.io/cluster-issuer: letsencrypt-prd
+          hosts:
+          - host: ha.vfd.ovh
+            paths:
+            - path: /
+              pathType: ImplementationSpecific
+          tls:
+          - secretName: ha-vfd-tls
+            hosts:
+            - ha.vfd.ovh
+        configuration:
+          enabled: true
+          forceInit: true
+          trusted_proxies:
+          - 100.64.0.0/16
+          templateConfig: |-
+            default_config:
+
+            {{- if .Values.ingress.enabled }}
+            http:
+              use_x_forwarded_for: true
+              trusted_proxies:
+                {{- range .Values.configuration.trusted_proxies }}
+                - {{ . }}
+                {{- end }}
+            {{- end}}
+
+            frontend:
+              themes: !include_dir_merge_named themes
+
+            automation: !include automations.yaml
+            script: !include scripts.yaml
+            scene: !include scenes.yaml
+
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: home-assistant
