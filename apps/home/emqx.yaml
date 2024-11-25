@@ -31,7 +31,7 @@ data:
     {allow, {username, {re, "^dashboard$"}}, subscribe, ["$SYS/#"]}.
     {allow, {ipaddr, "127.0.0.1"}, all, ["$SYS/#", "#"]}.
     {allow, {username, "zigbee2mqtt"}, all, ["zigbee2mqtt/#", "homeassistant/#", "hass/status"]}.
-    {allow, {username, "home-assistant"}, all, ["zigbee2mqtt/#", "homeassistant/#", "hass/status"]}.
+    {allow, {username, "home-assistant"}, all, ["zigbee2mqtt/#", "homeassistant/#", "hass/status", "drop_connect/discovery/#"]}.
     {deny, all, subscribe, ["$SYS/#", {eq, "#"}, {eq, "+/#"}]}.
     {deny, all}.
 ---
