@@ -1,0 +1,24 @@
+apiVersion: longhorn.io/v1beta1
+kind: RecurringJob
+metadata:
+  name: trim-fs
+  namespace: longhorn-system
+spec:
+  cron: "* * 2 * *"
+  task: "filesystem-trim"
+  groups:
+  - local
+  - replicated
+---
+apiVersion: longhorn.io/v1beta1
+kind: RecurringJob
+metadata:
+  name: backup
+  namespace: longhorn-system
+spec:
+  cron: "* * 4 * *"
+  task: "backup"
+  groups:
+  - replicated
+  retain: 7
+  concurrency: 3

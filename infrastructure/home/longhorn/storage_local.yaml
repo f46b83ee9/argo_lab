@@ -14,3 +14,4 @@ parameters:
 volumeBindingMode: Immediate
 reclaimPolicy: Delete
 allowVolumeExpansion: true
+recurringJobSelector: '[ { "name": "local", "isGroup": true }]'

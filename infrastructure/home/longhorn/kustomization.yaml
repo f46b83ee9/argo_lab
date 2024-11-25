@@ -6,6 +6,7 @@ resources:
 - ../../base/longhorn
 - storage_local.yaml
 - cifs_credentials.yaml
+- scheduled_jobs.yaml
 
 patches:
 - path: overlay.yaml
