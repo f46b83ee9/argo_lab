@@ -146,26 +146,26 @@ spec:
             - Victoria Metrics:
                 icon: si-victoriametrics
                 href: https://victoria-metrics.vfd.ovh/vmui
-            - EMQX:
-                icon: si-mqtt
-                href: https://emqx.vfd.ovh
             - Vaultwarden:
                 icon: si-bitwarden
                 href: https://vaultwarden.vfd.ovh
-            - Imprimante:
-                icon: mdi-printer
-                href: https://printer-m.vfd.ovh
-                ping: 192.168.10.155
+            - EMQX:
+                icon: si-mqtt
+                href: https://emqx.vfd.ovh
             - Zigbee:
                 icon: si-zigbee
                 href: https://zigbee-m.vfd.ovh
                 ping: 192.168.10.80
-            - Home Assistant:
-                icon: si-homeassistant
-                href: https://ha.vfd.ovh
             - Zigbee2MQTT:
                 icon: si-zigbee2mqtt
                 href: https://z2m.vfd.ovh
+            - Home Assistant:
+                icon: si-homeassistant
+                href: https://ha.vfd.ovh
+            - Imprimante:
+                icon: mdi-printer
+                href: https://printer-m.vfd.ovh
+                ping: 192.168.10.155
             - Freebox:
                 icon: mdi-wan
                 href: https://router.vfd.ovh
