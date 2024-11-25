@@ -4,7 +4,7 @@ metadata:
   name: trim-fs
   namespace: longhorn-system
 spec:
-  cron: "* * 2 * *"
+  cron: "0 2 * * *"
   task: "filesystem-trim"
   groups:
   - local
@@ -16,7 +16,7 @@ metadata:
   name: backup
   namespace: longhorn-system
 spec:
-  cron: "* * 4 * *"
+  cron: "0 4 * * *"
   task: "backup"
   groups:
   - replicated
