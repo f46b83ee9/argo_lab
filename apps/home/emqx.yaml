@@ -151,9 +151,6 @@ spec:
             storage: 5Gi
         accessModes:
         - ReadWriteOnce
-        persistentVolumeClaimRetentionPolicy:
-          whenDeleted: Delete
-          whenScaled: Delete
       extraVolumes:
       - name: mqtt-tls
         secret:
