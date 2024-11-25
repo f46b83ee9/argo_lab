@@ -38,6 +38,21 @@ data:
 apiVersion: bitnami.com/v1alpha1
 kind: SealedSecret
 metadata:
+  name: emqx-admin_dashboard
+  namespace: emqx
+spec:
+  encryptedData:
+    EMQX_DASHBOARD__DEFAULT_PASSWORD: AgALO6HO0SURvNRTfZ54N5cgPA+19iINf/SE7GGse3U4LropxsYhc7fYZFAhaDYnPezFr1/afM+vEipO0II0I4e2dAnJ76qdk64NSyEhNeC3NwwU4tP1GRtT8TeIahuBWA3GTRUAitHVoUVAMDypygYWvZXfV6q7JjxjPVkAMot5axPPlFyAj/tsPSdFQe/WIU/Ug8CcedUWYJe4qTJsd4kisyRXfE5LvUu31CjxTKh1cC02PT5kbz2alCDkexvhEGbdDLLdi0KlVS+2qWgCWOjOULP2OCQp0nGax3rQ4Lh4nUB23G9MxKT8N1QpKmO10Gc7YSOUvljFWkgisU6XS4ApCkY/jguoOl4HoskO6hwkFGJsb9Y7yCiWuY046Llz/Cr6PbHKpjgG4G2P7Q9Xy5pLxQ587sbJasjvNwVhsRVUdwvZ6B6mb1c4vdWRvj10CHPuq0CQpNKFEEES0/m2t5L1Z66xVAdcvqPysFEbT6zS6e9ZQ9qq4b5RnojEwCuy35jz2Ap9/8enao7LFWjpjndYR7dzCFwFbEtahtPlrHQpGQk8HsUkZBkGOiLYwkjmVRDQpDMut2muWFDOUlzkHjtUqPD+n1OF/XrDTlnZjAAXyi4x9zlLDZmB08nSdB+1Hsa+9I9QexqHezv6amuROtKJ35C98YuGocmdh6npsNzvHyvLnfnfxr691nwBtHLdC+JopQWMvzDsOOzzwop87OZYB6fO2wZ4m0c=
+    EMQX_DASHBOARD__DEFAULT_USERNAME: AgACNOUre9G3vC2p8ECAGVqxHV4b31UNeEHbQkXtLo5GexTcqq4gb0v2ltxYOtlYVPzsyNYOPi8TXuiVaVT65jNvGe5q6GRz7+7UN5qTFP6tHCsH5l1m+U1knyYNUy0X/ozijrtzcQpuTlzIBrxu7/xbUAAP05XBYd/pIGDSZe296BUzViW7zhdIKvbYNpXoeA7K3OGHIex2r0CZeOH4Vs83wFPK7PMI4NQDnBebLI/cjVKVkwEaFCObRIWPVaPq5pXy3N80hd6CWv+LZJdXNHFYvzZQsn0lOyHrlwue15fMydKib1iq74BtfwGq/m4fYADSfDafkhjAiG5ldLJixNOiMi+Uif3U/+n6G6urtXH3oa2fAsREqqgonkYWF6BDWbj+l/d0FVRwJXwnwhs6tIbFfsBsEJUY6RrstUnRepjbJcEg4j4selA31Y3Uq+2w/kltgLLdDENDUvuCmFG71/Cw4plif3dOeHM5gdoJgyW1v6JBnSFgGh8kbGeuNpT1udx6OIowKaN5TpWmyZ3K5hnvWEnfQtnVCKkzSUP07QVAEMb0pxEVuU4GcOByOnHrobgnBx5Lb79ec52JSDjrUF62PAq/I0IWEgdZKvQTqim1DUaV+Z+3TFdJaVeUdvkBGeJ3q6PdbJvs38ZI/viJ8FTvmS4xeMxzuu7ZWosXeyvU2Q52+EmQtUTPrbX0lybkr5v4z7Joqg==
+  template:
+    metadata:
+      name: emqx-admin_dashboard
+      namespace: emqx
+    type: Opaque
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
   name: emqx-users
   namespace: emqx
 spec:
@@ -54,6 +69,8 @@ kind: EMQX
 metadata:
   name: emqx
   namespace: emqx
+  annotations:
+    argocd.argoproj.io/sync-options: Replace=true
 spec:
   image: emqx:5.8.2
   config:
@@ -124,6 +141,9 @@ spec:
                 values:
                 - emqx
             topologyKey: kubernetes.io/hostname
+      envFrom:
+      - secretRef:
+        name: emqx-admin_dashboard
       volumeClaimTemplates:
         storageClassName: longhorn-local
         resources:
