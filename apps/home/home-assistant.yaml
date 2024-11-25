@@ -57,6 +57,13 @@ spec:
           - secretName: ha-vfd-tls
             hosts:
             - ha.vfd.ovh
+        initContainers:
+        - name: init-hacs
+          image: bash:5.2
+          command: [ "bash", "-c", "cd /config && [[ ! -d /config/custom_components/hacs ]] && wget -O - https://get.hacs.xyz | bash - || exit 0" ]
+          volumeMounts:
+          - mountPath: /config
+            name: home-assistant
         configuration:
           enabled: true
           forceInit: true
@@ -73,6 +80,27 @@ spec:
                 - {{ . }}
                 {{- end }}
             {{- end}}
+
+            homekit:
+              advertise_ip: 192.168.10.231
+              filter:
+                exclude_domains:
+                  - automation
+                exclude_entities:
+                  - sun.sun
+                  - zone.home
+                  - weather.home
+                  - sensor.hacs
+                exclude_entity_globs:
+                  - sensor.*_battery
+
+            emulated_hue:
+              type: alexa
+              advertise_ip: 192.168.10.231
+              listen_port: 80
+              expose_by_default: true
+              exposed_domains:
+                - light
 
             frontend:
               themes: !include_dir_merge_named themes
