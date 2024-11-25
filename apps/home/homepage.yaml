@@ -161,7 +161,7 @@ spec:
                 href: https://zigbee-m.vfd.ovh
                 ping: 192.168.10.80
             - Home Assistant:
-                icon: si-home-assistnat
+                icon: si-home-assistant
                 href: https://ha.vfd.ovh
             - Zigbee2MQTT:
                 icon: si-zigbee2mqtt
