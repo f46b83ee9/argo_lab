@@ -162,6 +162,9 @@ spec:
             - Home Assistant:
                 icon: si-homeassistant
                 href: https://ha.vfd.ovh
+            - Node-RED:
+                icon: si-node-red
+                href: https://nodered.vfd.ovh
             - Imprimante:
                 icon: mdi-printer
                 href: https://printer-m.vfd.ovh

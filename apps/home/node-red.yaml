@@ -1,0 +1,184 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: node-red
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: node-red-settings
+  namespace: node-red
+data:
+  settings.js: |-
+    module.exports = {
+      flowFile: 'flows.json',
+      flowFilePretty: true,
+      credentialSecret: process.env.NODE_RED_CREDENTIAL_SECRET,
+      adminAuth: {
+          type: "credentials",
+          users: [{
+              username: "admin",
+              password: process.env.NODE_RED_ADMIN_PASSWORD_HASH,
+              permissions: "*"
+          }]
+      },
+      uiPort: process.env.PORT || 1880,
+      diagnostics: {
+          enabled: true,
+          ui: true,
+      },
+      runtimeState: {
+          enabled: false,
+          ui: false,
+      },
+      logging: {
+          console: {
+              level: "info",
+              metrics: false,
+              audit: false
+          }
+      },
+      exportGlobalContextKeys: false,
+      externalModules: {},
+      editorTheme: {
+          theme: "dracula",
+          tours: false,
+          palette: {},
+          projects: {
+              enabled: false,
+              workflow: {
+                  mode: "manual"
+              }
+          },
+          codeEditor: {
+              lib: "monaco",
+              options: {}
+          },
+          markdownEditor: {
+              mermaid: {
+                  enabled: true
+              }
+          },
+          multiplayer: {
+              enabled: false
+          },
+      },
+      functionExternalModules: true,
+      functionTimeout: 0,
+      functionGlobalContext: {},
+      debugMaxLength: 1000,
+      mqttReconnectTime: 15000,
+      serialReconnectTime: 15000,
+    }
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  name: node-red-env
+  namespace: node-red
+spec:
+  encryptedData:
+    NODE_RED_ADMIN_PASSWORD_HASH: AgB7j1BiZpNEkA3Y8dtvcydppcJDAwF59E4q387Bovd5qzBKsps99DpHPhg5SOWZ/73tX5x33XG6QdWyNGbM6jo1pHPLVIDCdWeNK8jCRCG2+dcOdXH++U6ruQ+xgog34NrVNCTV8itXYZBvzuZfqEHWUuukdV5b8IiIpVKfBPQ73FwjFfeYdeDMC/np+MvgwOJ3P0jGqZveRTp7ZhIkj0Xnflt1PETwbmhGq634qJb/DoIcxhFlqdERCZ2KjORS2GFbhObXc1x5PV7vdie8cmF+CkfWcK6Zkz8r8f44Qs0D/RlF3Aze2Pff20BSEm7eojomK9eATrjzxufr2c+oN6ORg+8+PixN2Ix2tr3k/+YjE3jox72aX2/NiZzxjFA9t5dLbx0MKH3Xz7dZKNLIEI2vXbGpJINhCaF3/BMfLwmg/H7Rc3AyVs3mg30XJMjGeQhu1EzJ+NekQNNYpVn4KPv1VRKctPQokrpMyYnBzuDKxR/6FKgHEjGVmHbWA01OFCVkImO68yt5pN1wllNrVxliT0J73CfwpOLNqvaWfx4G0Rjy65RPY82yWL8oSSRAl06+Zhv+TbGeMRhamRq1f0AQvC+5loD+KheFlEQaBWR94XncsqPZHalPV+6GYAZ6ecnuEMC2eTZD4rcGp0Toe35H8wlXEN9YIdMvBQjkblHtRyNteSHxC6OoWksU9DVmYU5sh3hg1jQ3zBcfptqFWqsvhEDOd23stPOS94biRNA1TNcCaMWJRCGoG5B+EnHVgriqESeUCAuxdd54/6o=
+    NODE_RED_CREDENTIAL_SECRET: AgBQBpm5H8TOmbYXvOvVDHVa4HQcwndRKilVsBtBUURKgjUgOwVomnXzeBV+PpM3FAKaXk2P1fj/HpjGGfRIagTWob7bdUSLx2tMSM4YHJ9K9NNCh9invo3mYL9h1B67PAkrAtjMKvqgcJuoWIoCLBlwDwsiodOj3iLJvl9gTiioORu9HWU6fWu8RmhVOd4GRJDdFhXI2Q3btjARlweFKb+KjdSylC+JSTd+q3+MX2XE7253gZ3gp1QUP2RSDB2WmgdzxlxzpJncnS2FWyPUJBW3qI1TSoPY3XQkO1nougRTkWP4CzMANIPmlNk7uVBGX9ecyrgv8tznwHBPJ6wQ3jeIjKtMIZslYiV5xT1wXWmV1vQlCfi38e2kxNKG+Vm+TLV5QYl5SJLmxahuwIC1gm8sHel2qoPKIV8KBt64x3v0tt72Tjq1ZDCDxBywmlK7eEMKAR899cxXiPlQdrn5tJc/MjBQzzrM2DFPQEATNWkhBMNSfaipV7DgH95/3huzkmZ0P2oxT90aBndGntst7yOub8tz+0cY78vcMsy+0T9XT7jdxl4aGpHGnJCKM0VDQZj/PwRtCzY+PJKJytkINxYabZ3zMeiZifkk1Uv5Pl54G22vHNu2rcBptG603SKo5x6nk8FOBZgdxLb3LikFTm83SYy8igLAy1gJlrMBFv0Bffnt6eubt2djA5Ydt3JCir2y1rEknnkYJWrK+/bL6CBAaVt4R5Fm0B4=
+  template:
+    metadata:
+      name: node-red-env
+      namespace: node-red
+    type: Opaque
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  name: node-red-api-admin-password
+  namespace: node-red
+spec:
+  encryptedData:
+    password: AgBiMh9DXDyaHdl2fLngsrlgEIMAilRV361rsJUQ6qUl9dq7O6uyWZGpY6HAWji7NuYEXPKlyRIQyA7uCAyL1K9C5DrUZRR3PvYEZ9tS/6vWdWDFlH6pR+vcCcLc/m7WqnmOeel8AgPNoeVio9mzYWyBaRL7/Ufqz6XGhHmKspwGa3wlY+77G1znpOcdmO/MVF9z0e1blz7MRtR7qQjIW1+m3tBVn7NEPqb4+XKxymT32XzpvpKWEkBtfrP4519IhKAqj9ej07wLe1N5vVslZ3k+Q1iAhCIl4pI+RFZWB7RH5K8mj2k10YqKYqNBUN9vC5xYjfWLiiSecsbL/Xl/b1IpM/om4oJdCh63hoqHKVYmm40c61xtvsJgZBetNIGjNjYOpBecrY9HH01auCfozMZOs35jAjdpuCOdMUdx+0GrzSg0lD5JXZTrLtyN/S8Wy4hsQBOmXbUj5F0YBv1zrTUdwdqX39SGzC6+2rURRyk0tkvfz4t9w4mYkcd571H2eisahNA6ZIPhyNhR7oYxtoFZeKuvi9/T/Zol02v2DypduiLwtxB6nMzy/McPNE6XT/anvvQe8FVGTUdAaSTkZxoR4DF9Wuy2Hff8/TtwZu68IaxS3j5+9t1NggdXU9ciJU0lwnFIHBUAwh8sdxGi6JKsiM8jfbOwULvjEI0RJMD5WGee61O6vmunCCdK/oqCWyT1Hu86ypimTNQ1J5nn8JcUvPKaRBb+AQw=
+  template:
+    metadata:
+      name: node-red-api-admin-password
+      namespace: node-red
+    type: Opaque
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: node-red
+  namespace: argocd
+spec:
+  project: applications
+
+  ignoreDifferences:
+  - group: argoproj.io
+    jsonPointers:
+    - /status
+    kind: Application
+
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    automated:
+      allowEmpty: true
+      prune: true
+      selfHeal: true
+
+  source:
+    chart: node-red
+    repoURL: https://schwarzit.github.io/node-red-chart/
+    targetRevision: 0.33.1
+    helm:
+      valuesObject:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: kubernetes.io/arch
+                  operator: In
+                  values:
+                  - arm64
+        persistence:
+          enabled: true
+          storageClass: longhorn
+          accessMode: ReadWriteOnce
+          size: 5Gi
+          keepPVC: true
+        ingress:
+          enabled: true
+          annotations:
+            cert-manager.io/cluster-issuer: letsencrypt-prd
+          className: nginx
+          hosts:
+          - host: nodered.vfd.ovh
+            paths:
+            - path: /
+              pathType: ImplementationSpecific
+          tls:
+          - secretName: nodered-vfd-tls
+            hosts:
+            - nodered.vfd.ovh
+            certificate:
+              enabled: false
+        envFrom:
+        - secretRef:
+            name: node-red-env
+        settings:
+          name: node-red-settings
+          configMapName: node-red-settings
+        sidecar:
+          enabled: true
+          env:
+            username: admin
+            passwordFromExistingSecret:
+              name: node-red-api-admin-password
+              key: password
+          extraNodeModules:
+          - node-red-contrib-home-assistant-websocket
+          - node-red-contrib-chronos
+          - '@digitalnodecom/node-red-contrib-generic-s3'
+          - '@node-red-contrib-themes/theme-collection'
+
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: node-red
