@@ -22,8 +22,8 @@ spec:
       selfHeal: true
 
   source:
-    chart: external-dns
-    repoURL: oci://ghcr.io/dragonflydb/dragonfly-operator/helm
+    chart: dragonfly-operator/helm/dragonfly-operator
+    repoURL: ghcr.io/dragonflydb
     targetRevision: v1.1.8
 
   destination:
