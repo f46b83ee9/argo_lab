@@ -165,6 +165,10 @@ spec:
             - Node-RED:
                 icon: si-node-red
                 href: https://nodered.vfd.ovh
+            - Authentik:
+                icon: si-authentik
+                href: https://idp.vfd.ovh
+                ping: 192.168.10.238
             - Imprimante:
                 icon: mdi-printer
                 href: https://printer-m.vfd.ovh
