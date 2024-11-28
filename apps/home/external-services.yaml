@@ -55,6 +55,12 @@ spec:
           protocol: http
           tls:
             enabled: true
+        - name: idp
+          ip: 192.168.10.238
+          protocol: http
+          port: 9000
+          tls:
+            enabled: true
 
   destination:
     server: "https://kubernetes.default.svc"
