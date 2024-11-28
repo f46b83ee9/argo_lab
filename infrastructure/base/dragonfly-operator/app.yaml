@@ -1,0 +1,31 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dragonfly-operator
+  namespace: argocd
+spec:
+  project: infrastructure
+
+  ignoreDifferences:
+  - group: argoproj.io
+    jsonPointers:
+    - /status
+    kind: Application
+
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    automated:
+      allowEmpty: true
+      prune: true
+      selfHeal: true
+
+  source:
+    chart: external-dns
+    repoURL: oci://ghcr.io/dragonflydb/dragonfly-operator/helm
+    targetRevision: v1.1.8
+
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: dragonfly-operator-system
