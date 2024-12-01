@@ -24,6 +24,7 @@ apiVersion: postgresql.cnpg.io/v1
 kind: ScheduledBackup
 metadata:
   name: postgres-backup
+  namespace: home-assistant
 spec:
   method: volumeSnapshot
   schedule: "0 30 0 * * *"
