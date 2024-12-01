@@ -27,6 +27,9 @@ spec:
     targetRevision: 0.2.89
     helm:
       valuesObject:
+        env:
+        - name: "PYTHONPATH"
+          value: "/config/deps"
         podAnnotations:
           k8s.v1.cni.cncf.io/networks: '[ { "name": "macvlan", "namespace": "kube-system", "ips": [ "192.168.10.231" ] }]'
         affinity:
