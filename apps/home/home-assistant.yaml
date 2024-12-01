@@ -20,6 +20,18 @@ spec:
     volumeSnapshot:
       className: longhorn-backup-vsc
 ---
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: postgres-backup
+spec:
+  method: volumeSnapshot
+  schedule: "0 30 0 * * *"
+  backupOwnerReference: self
+  immediate: true
+  cluster:
+    name: postgres
+---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
