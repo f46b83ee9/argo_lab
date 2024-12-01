@@ -27,6 +27,7 @@
       "versioningTemplate": "semver"
     }
   ],
+  "ignoreDeps": [ "https://github.com/kubernetes-csi/external-snapshotter.git" ],
   "packageRules": [
     {
       "matchUpdateTypes": [
