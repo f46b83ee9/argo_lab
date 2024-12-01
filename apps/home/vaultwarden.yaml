@@ -1,4 +1,24 @@
 ---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: vaultwarden
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  name: vaultwarden-installation
+  namespace: vaultwarden
+spec:
+  encryptedData:
+    id: AgApLvXsoXCBuy3im9JQtfNhO+29XEgXWfNEfjWWbKWjhQHbamhcMGtZAFTpxca9+CNmHnWiDrQOhnBXxjzmmAy4vvyRZsZcdgQUMREN5Lbl8LYyk+XUKlmeHGREmjOL2h/sYP67U0CHdunergH8gkI8T/yc8+OVa5DOHlc/26QXrPJivUkq5ofyQmH29t+aBHo0h6Sp6GWYet0LYZUoOmN+P6LXpPlkz1B6y00J/zvCy40Rj6kFyzVIhTQ98RY7BYOcSyQ5+MJPNW8Z+SgbQXwQ9V6tvF8ZY4V0fsX1pNuBTKFR6JLXehCKVKmhIJRrNChC0lmtjxwnRWoSUrCLSMk/6HkGG50S2bLaoaqfhD0bb74EgCOx4h13U1GRX4NOWqSt+Ii5wrF8yVEZvlAkL5AKkCNszFoaaCNIPvoNyjPnAj7/+sCoyajiWgfd16GaYI6zAUZs4RRzgjE5DFH+8LdoFAUTCZD0kD3RHlNlKab3/ejW2YDbZNfxjloG4pWV2mWgfMDLnpojwvn8Z5VtjUBYk5avuJjMBK3RDt/FJTarKRg1Oo9HuD0ISjq3w+o6Xjsk5Bfyf50AF47EUz1NTGiChXQYcflj86DG+KhgiG8Ix5p+wpvGNqxo/jg8v9rpvPWwkOxc/DQsclVaWd8dUZurCQYYWJnBfZ93aZJekxD7ZzNEEf98bmVvGLX4TluGoTDPr1npLQkStXr266Iqshe35/f8wzb1QmAdnnmv3NgvgiT63sU=
+    key: AgBcYx+s9tVd2kzL4jggevgtvms2zE5hSLhjkN2EJvfPdwJqQiSDhyh4DtJAqyYZxkUmNZxMMr6bHcT+ST7VdkANlLZmCB+pDMxhMs3pzAmomEhrehnxciVzBmTSLluM9C5KuqH0nIXGDWwI/5Q8lUF0+SrEDxu7cgtQejKwK39XSnJ9fXjnLYUS6EJnnjhvCocFfAfL3fwtqTG3dj5nEPacv/yppAV3Ez7n5Fz4ImRFb3Qk5dg2LRXmF7THN4jnlVOvpcxtWgSYhGMW1Wx071QMaFcVj3l64uRyc2Wc9phizlPa80Vo/R0JpKjfnOcvYaRMXs2ulvdMx0kRvZlf6TTyBqZnnWOthKDlboTSoGTWixef6dk7uV37yO1ethxPoNsRBkpwxqK+AC/34MX8PMY72n1lbwa0gQr8oEn4e+AZE7TVV1aGC98tnDU7INU7OIqDzfSi60sVYlE4i5De+MU7d5TH3Lw/GZZPBcgSWxQihPNWkWjxbAUESdp0vmKzDx/gP9c4pOBh020hMeMEuPViKcoIpGj33jw10P/zf34GBYTJQTdhajdE2W17B4cUzA6FbmPzlQ/+7XSmmtj1ZrcJO1I+Q81w9yKvbIKTilrYuhrtSQClTg7R8EWiZY5uab4znJvtoQozm2zO8cnEh6lKv/Vi+fcTbw4THN3hJzoGI15PrWl0WmfGtIuvq+NbfnuIsXe50dk76nt6mRArQ6zpV32RQQ==
+  template:
+    metadata:
+      name: vaultwarden-installation
+      namespace: vaultwarden
+    type: Opaque
+---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -27,14 +47,34 @@ spec:
     targetRevision: 0.31.0
     helm:
       valuesObject:
+        pushNotifications:
+          enabled: true
+          relayUri: "https://push.bitwarden.eu"
+          identityUri: "https://identity.bitwarden.eu"
+          existingSecret: vaultwarden-installation
+          installationId:
+            existingSecretKey: id
+          installationKey:
+            existingSecretKey: key
+
         domain: https://vaultwarden.vfd.ovh
 
-        data:
-          name: vaultwarden-data
-          size: 15Gi
-          class: longhorn
-          accessMode: ReadWriteOnce
-          keepPvc: true
+        storage:
+          data:
+            name: vaultwarden-data
+            size: 15Gi
+            class: longhorn
+            path: /data
+            accessMode: ReadWriteOnce
+            keepPvc: true
+
+          attachments:
+            name: vaultwarden-data
+            size: 100Gi
+            class: longhorn
+            path: /files
+            accessMode: ReadWriteOnce
+            keepPvc: true
 
         ingress:
           enabled: true
