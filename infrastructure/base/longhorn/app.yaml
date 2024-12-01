@@ -5,10 +5,26 @@ metadata:
   name: csi-snapshotter-crd
 spec:
   project: infrastructure
+
+  ignoreDifferences:
+  - group: argoproj.io
+    jsonPointers:
+    - /status
+    kind: Application
+
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    automated:
+      allowEmpty: true
+      prune: true
+      selfHeal: true
+
   source:
     path: client/config/crd
     repoURL: https://github.com/kubernetes-csi/external-snapshotter.git
     targetRevision: v7.0.2
+
   destination:
     namespace: kube-system
     server: 'https://kubernetes.default.svc'
@@ -19,10 +35,26 @@ metadata:
   name: csi-snapshotter
 spec:
   project: infrastructure
+
+  ignoreDifferences:
+  - group: argoproj.io
+    jsonPointers:
+    - /status
+    kind: Application
+
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    automated:
+      allowEmpty: true
+      prune: true
+      selfHeal: true
+
   source:
     path: deploy/kubernetes/snapshot-controller
     repoURL: https://github.com/kubernetes-csi/external-snapshotter.git
     targetRevision: v7.0.2
+
   destination:
     namespace: kube-system
     server: 'https://kubernetes.default.svc'
