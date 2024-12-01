@@ -1,4 +1,25 @@
 ---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: home-assistant
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: postgres
+  namespace: home-assistant
+spec:
+  instances: 2
+
+  storage:
+    storageClass: longhorn-local
+    size: 20Gi
+
+  backup:
+    volumeSnapshot:
+      className: longhorn-backup-vsc
+---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -28,8 +49,13 @@ spec:
     helm:
       valuesObject:
         env:
-        - name: "PYTHONPATH"
-          value: "/config/deps"
+        - name: PYTHONPATH
+          value: /config/deps
+        - name: DB_PG_URI
+          valueFrom:
+            secretKeyRef:
+              name: postgres-app
+              key: uri
         podAnnotations:
           k8s.v1.cni.cncf.io/networks: '[ { "name": "macvlan", "namespace": "kube-system", "ips": [ "192.168.10.231" ] }]'
         affinity:
@@ -104,6 +130,24 @@ spec:
               expose_by_default: true
               exposed_domains:
                 - light
+
+            recorder:
+              db_url: !env_var DB_PG_URI
+              purge_keep_days: 365
+              exclude:
+                domains:
+                  - automation
+                  - update
+                entity_globs:
+                  - sensor.sun*
+                  - weather.*
+                  - calendar.*
+                  - sensor.aulnay_sous_bois*
+                  - sensor.93*
+                entities:
+                  - sensor.date
+                  - sensor.last_boot
+                  - sun.sun
 
             frontend:
               themes: !include_dir_merge_named themes
