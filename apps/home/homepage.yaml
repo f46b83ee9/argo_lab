@@ -162,13 +162,15 @@ spec:
             - Home Assistant:
                 icon: si-homeassistant
                 href: https://ha.vfd.ovh
+            - Music Assistant:
+                icon: si-applemusic
+                href: https://ma.vfd.ovh
             - Node-RED:
                 icon: si-node-red
                 href: https://nodered.vfd.ovh
-            - Authentik:
-                icon: si-authentik
-                href: https://idp.vfd.ovh
-                ping: 192.168.10.238
+            - Grafana:
+                icon: si-grafana
+                href: https://grafana.vfd.ovh
             - Imprimante:
                 icon: mdi-printer
                 href: https://printer-m.vfd.ovh
