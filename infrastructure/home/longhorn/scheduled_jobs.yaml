@@ -4,11 +4,12 @@ metadata:
   name: trim-fs
   namespace: longhorn-system
 spec:
-  cron: "0 2 * * *"
+  cron: "0 3 * * *"
   task: "filesystem-trim"
   groups:
   - local
   - replicated
+  concurrency: 3
 ---
 apiVersion: longhorn.io/v1beta1
 kind: RecurringJob
