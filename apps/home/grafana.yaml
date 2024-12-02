@@ -1,0 +1,84 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: grafana
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  name: grafana-admin
+  namespace: grafana
+spec:
+  encryptedData:
+    password: AgAgqzQ1abizIdiOVyKGaWOzgeBY/YomnYv81LchZa4MpOdAsEf44+W455OKuzVObHLwdVxTbLpEQuFerQ0U2vc10iD2/hVNBaXru/gmIKHZgSNYK/CDXsPliqBd9avU3DGcgQ5JlFQ3jr725M4gGW5LOOP0tgzPgI5giQlqqXHSUvYjeYBjbZJHW4wBinEykgDZd6ZafCGI0XEMJsJij2hbpnRYdYIGgiF8S+rX1HGTnCmmQTtdnU5Gi5rL20v6TpKLwHxgnGS5a9Jm/3G/o3m4QlyTxOehBhC2i34vXV2h4S4KCSZ2AxfnSazTN86mgNlXfZGiKoteI7frYDoj5eZt5AmGiEtNQznWc7vKXdVihz9Vj2O/ifIRJZVVg7cvCmSrYSNjSP/mptxAI0bpp+DVv+1w/7zAVCnDIAQurnwCP2TBFa54LBQRVOyhLjboWOVef/FNCuJnzbZstqtlwx3zZKOySLJxqdoAVVwiYWsohd404K/WNo1B25KOBw7Ac5u+0OtBjtNka3XX9WHQzO/pYvlHSFIgT4e0Qi+KBqQLC/ir/HiizBc1d2bcGkS3cI/ywUl/98rwtchPPqMpVrUVojxfSS5b7oCIZHnLyVytFWQnYF1DOgLrjyxcBbpukiqoY8ATk3xzMUuzf9/qA6CoqRQ+HoM1AmdFAH6jQiaqy/mecGNw5SNqnwdBvjoBD67P8Chb2ES4ZqedL+Z4c385nGxWXQ==
+    username: AgB0brzCjVJY3kSD7xuHzcMoMhjgHuBKf1REFYLKYR1Ku2pLxcZdFOMHsm0gxNIzKHqQiNLStLUxk9UhhIaAd4RTgvnCzbvnDENYcsu8nRzNzP5C2dkAzjF0p+qjOIu5+3j5MrctUfP8fja//U45OlV+85fRcGpRmMYCH3w036F2A8IFItqWtPGai93nMsXFNwjaO1VRmaLz+sgKCmluqVt5fAvoWnmZnVpfTJBTyz+gvEbmrX4Pg6qOx0Lqg04TQCFgSMbDTeKIlUwWXO4tkxvbUM8IyLCyhFJnqbS3EFMTkt9xg01aYaVg1Hfvq7/nTg7DCGN4Su0nVkgDkbp7DJE1b76UhrQ22aovPPx8v/yGA7onGfNA29ujTvPmCN6xR5sqG9Zr8D9uQs+q5cfBcQ0mlJ2nQleJo/B8s8qX8BRg7JYRC6a2odlQQ9h4urpzfraaqBX6oEB46/sUOOMown9sCdn1ZttA9lpJ8g/sM0HQzO3yjgzuDniAsDgSOhT+gkGPcs0+kc6RSNHnEc5bQAD+Grt/YIIva6GqVO1T/KJ2VwOE4vTYFFUbHI5Jg1YxmDIfDZCILkp7JmMHXs68beI/hzP/sHACan0fZw/9OfBMOljzWiBiO4KSb/98w8IKTcr9Uh4GZP6S4fEsRzWf64nyKZIVguD+rROfNZ1SGoz+vXVRBTcIkgRswET8A17nE4dn0fuTQXWvLzmW576Wbw==
+  template:
+    metadata:
+      name: grafana-admin
+      namespace: grafana
+    type: Opaque
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: grafana
+  namespace: argocd
+spec:
+  project: applications
+
+  ignoreDifferences:
+  - group: argoproj.io
+    jsonPointers:
+    - /status
+    kind: Application
+
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    automated:
+      allowEmpty: true
+      prune: true
+      selfHeal: true
+
+  source:
+    chart: grafana
+    repoURL: https://grafana.github.io/helm-charts
+    targetRevision: 8.6.4
+    helm:
+      valuesObject:
+        testFramework:
+          enabled: false
+
+        persistence:
+          enabled: true
+          type: pvc
+          storageClassName: longhorn
+          accessModes:
+          - ReadWriteOnce
+          size: 10Gi
+          finalizers:
+          - kubernetes.io/pvc-protection
+          disableWarning: false
+
+        ingress:
+          enabled: true
+          ingressClassName: nginx
+          annotations:
+            cert-manager.io/cluster-issuer: letsencrypt-prd
+          hosts:
+          - grafana.vfd.ovh
+          path: /
+          tls:
+          - secretName: grafana-vfd-tls
+            hosts:
+            - grafana.vfd.ovh
+
+        admin:
+          existingSecret: grafana-admin
+          userKey: username
+          passwordKey: password
+
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: grafana
