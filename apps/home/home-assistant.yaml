@@ -146,7 +146,7 @@ spec:
 
             recorder:
               db_url: !env_var DB_PG_URI
-              purge_keep_days: 365
+              purge_keep_days: 10
               exclude:
                 domains:
                   - automation
