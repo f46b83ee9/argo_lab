@@ -143,6 +143,9 @@ spec:
               expose_by_default: true
               exposed_domains:
                 - light
+              entities:
+                remote.shield_remote:
+                  hidden: false
 
             recorder:
               db_url: !env_var DB_PG_URI
