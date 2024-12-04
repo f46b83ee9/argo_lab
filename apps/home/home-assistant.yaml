@@ -1,38 +1,4 @@
 ---
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: home-assistant
----
-apiVersion: postgresql.cnpg.io/v1
-kind: Cluster
-metadata:
-  name: postgres
-  namespace: home-assistant
-spec:
-  instances: 2
-
-  storage:
-    storageClass: longhorn-local
-    size: 20Gi
-
-  backup:
-    volumeSnapshot:
-      className: longhorn-backup-vsc
----
-apiVersion: postgresql.cnpg.io/v1
-kind: ScheduledBackup
-metadata:
-  name: postgres-backup
-  namespace: home-assistant
-spec:
-  method: volumeSnapshot
-  schedule: "0 30 0 * * *"
-  backupOwnerReference: self
-  immediate: true
-  cluster:
-    name: postgres
----
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -61,14 +27,13 @@ spec:
     targetRevision: 0.2.89
     helm:
       valuesObject:
+        image:
+          repository: ghcr.io/home-assistant/home-assistant
+          pullPolicy: IfNotPresent
+          tag: 2024.12.0
         env:
         - name: PYTHONPATH
           value: /config/deps
-        - name: DB_PG_URI
-          valueFrom:
-            secretKeyRef:
-              name: postgres-app
-              key: uri
         podAnnotations:
           k8s.v1.cni.cncf.io/networks: '[ { "name": "macvlan", "namespace": "kube-system", "ips": [ "192.168.10.231" ] }]'
         affinity:
@@ -102,7 +67,7 @@ spec:
         initContainers:
         - name: init-hacs
           image: bash:5.2
-          command: [ "bash", "-c", "cd /config && [[ ! -d /config/custom_components/hacs ]] && wget -O - https://get.hacs.xyz | bash - || exit 0" ]
+          command: ["bash", "-c", "cd /config && [[ ! -d /config/custom_components/hacs ]] && wget -O - https://get.hacs.xyz | bash - || exit 0"]
           volumeMounts:
           - mountPath: /config
             name: home-assistant
@@ -147,23 +112,31 @@ spec:
                 remote.shield_remote:
                   hidden: false
 
-            recorder:
-              db_url: !env_var DB_PG_URI
-              purge_keep_days: 10
-              exclude:
-                domains:
+            prometheus:
+              namespace: hass
+              component_config_glob:
+                sensor.*_hum:
+                  override_metric: humidity_percent
+                sensor.*_temp:
+                  override_metric: temperature_c
+                sensor.temperature*:
+                  override_metric: temperature_c
+                sensor.*_bat:
+                  override_metric: battery_percent
+              filter:
+                exclude_domains:
                   - automation
                   - update
-                entity_globs:
+                exclude_entity_globs:
                   - sensor.sun*
                   - weather.*
                   - calendar.*
                   - sensor.aulnay_sous_bois*
                   - sensor.93*
-                entities:
+                exclude_entities:
                   - sensor.date
                   - sensor.last_boot
-                  - sun.sun
+                  - sun.sun              
 
             frontend:
               themes: !include_dir_merge_named themes
