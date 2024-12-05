@@ -27,10 +27,6 @@ spec:
     targetRevision: 0.2.90
     helm:
       valuesObject:
-        image:
-          repository: ghcr.io/home-assistant/home-assistant
-          pullPolicy: IfNotPresent
-          tag: 2024.12.0
         podAnnotations:
           k8s.v1.cni.cncf.io/networks: '[ { "name": "macvlan", "namespace": "kube-system", "ips": [ "192.168.10.231" ] }]'
         affinity:
