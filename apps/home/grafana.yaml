@@ -50,6 +50,9 @@ spec:
         testFramework:
           enabled: false
 
+        plugins:
+        - https://github.com/VictoriaMetrics/victoriametrics-datasource/releases/download/v0.10.3/victoriametrics-datasource-v0.10.3.zip;victoriametrics-datasource
+
         persistence:
           enabled: true
           type: pvc
