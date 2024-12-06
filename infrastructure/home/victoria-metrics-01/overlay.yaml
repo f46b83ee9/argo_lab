@@ -8,6 +8,15 @@ spec:
   source:
     helm:
       valuesObject:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: kubernetes.io/arch
+                  operator: In
+                  values:
+                  - arm64
         server:
           ingress:
             enabled: true
@@ -15,17 +24,17 @@ spec:
             annotations:
               cert-manager.io/cluster-issuer: letsencrypt-prd
             hosts:
-            - name: victoria-metrics.vfd.ovh
+            - name: vm01.vfd.ovh
               path:
               - /
               port: http
             tls:
-            - secretName: victoria-metrics-vfd-tls
+            - secretName: vm01-vfd-tls
               hosts:
-              - victoria-metrics.vfd.ovh
+              - vm01.vfd.ovh
           persistentVolume:
-            name: victoria-metrics-data
-            size: 50Gi
+            name: victoria-metrics-01-data
+            size: 100Gi
             storageClassName: longhorn
             accessModes:
             - ReadWriteOnce
