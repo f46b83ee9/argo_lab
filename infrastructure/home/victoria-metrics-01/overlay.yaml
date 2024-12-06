@@ -18,7 +18,6 @@ spec:
                   values:
                   - arm64
         server:
-          fullnameOverride: victoria-metrics-arm
           ingress:
             enabled: true
             ingressClassName: nginx

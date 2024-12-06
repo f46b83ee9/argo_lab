@@ -7,3 +7,10 @@ resources:
 
 patches:
 - path: overlay.yaml
+- target:
+    kind: Application
+    name: victoria-metrics
+  patch: |-
+    - op: replace
+      path: /metadata/name
+      value: victoria-metrics-amd
