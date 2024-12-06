@@ -143,9 +143,12 @@ spec:
             - Longhorn:
                 icon: si-rancher
                 href: https://longhorn.vfd.ovh
-            - Victoria Metrics:
+            - Victoria Metrics 01:
                 icon: si-victoriametrics
-                href: https://victoria-metrics.vfd.ovh/vmui
+                href: https://vm01.vfd.ovh/vmui
+            - Victoria Metrics 02:
+                icon: si-victoriametrics
+                href: https://vm02.vfd.ovh/vmui
             - Vaultwarden:
                 icon: si-bitwarden
                 href: https://vaultwarden.vfd.ovh
