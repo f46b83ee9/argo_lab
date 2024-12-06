@@ -9,9 +9,6 @@ spec:
     helm:
       valuesObject:
         server:
-          ingress:
-            enabled: true
-            ingressClassName: nginx
           affinity:
             nodeAffinity:
               requiredDuringSchedulingIgnoredDuringExecution:
@@ -21,6 +18,9 @@ spec:
                     operator: In
                     values:
                     - amd64
+          ingress:
+            enabled: true
+            ingressClassName: nginx
             annotations:
               cert-manager.io/cluster-issuer: letsencrypt-prd
             hosts:
