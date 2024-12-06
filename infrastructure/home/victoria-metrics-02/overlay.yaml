@@ -1,0 +1,40 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: victoria-metrics
+  namespace: argocd
+spec:
+  source:
+    helm:
+      valuesObject:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: kubernetes.io/arch
+                  operator: In
+                  values:
+                  - amd64
+        server:
+          ingress:
+            enabled: true
+            ingressClassName: nginx
+            annotations:
+              cert-manager.io/cluster-issuer: letsencrypt-prd
+            hosts:
+            - name: vm02.vfd.ovh
+              path:
+              - /
+              port: http
+            tls:
+            - secretName: vm02-vfd-tls
+              hosts:
+              - vm02.vfd.ovh
+          persistentVolume:
+            name: victoria-metrics-02-data
+            size: 100Gi
+            storageClassName: longhorn
+            accessModes:
+            - ReadWriteOnce
