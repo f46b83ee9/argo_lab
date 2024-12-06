@@ -18,6 +18,7 @@ spec:
                   values:
                   - amd64
         server:
+          fullnameOverride: victoria-metrics-amd
           ingress:
             enabled: true
             ingressClassName: nginx
