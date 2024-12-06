@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: victoria-metrics-02
+  name: victoria-metrics
   namespace: argocd
 spec:
   source:
@@ -38,3 +38,6 @@ spec:
             storageClassName: longhorn
             accessModes:
             - ReadWriteOnce
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: victoria-metrics-amd
