@@ -16,11 +16,6 @@ spec:
         k8sClientRateLimit:
           qps: 50
           burst: 100
-        bpf:
-          autoMount:
-            enabled: false
-        socketLB:
-          hostNamespaceOnly: true
         l2announcements:
           enabled: true
         externalIPs:
