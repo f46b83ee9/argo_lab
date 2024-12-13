@@ -47,6 +47,11 @@ spec:
     targetRevision: 0.31.1
     helm:
       valuesObject:
+        image:
+          extraVars:
+          - key: EXPERIMENTAL_CLIENT_FEATURE_FLAGS
+            value: ssh-agent
+            
         pushNotifications:
           enabled: true
           relayUri: "https://push.bitwarden.eu"
