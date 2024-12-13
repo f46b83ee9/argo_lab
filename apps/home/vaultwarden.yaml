@@ -50,7 +50,7 @@ spec:
         image:
           extraVars:
           - key: EXPERIMENTAL_CLIENT_FEATURE_FLAGS
-            value: ssh-agent
+            value: ssh-key-vault-item,ssh-agent
             
         pushNotifications:
           enabled: true
