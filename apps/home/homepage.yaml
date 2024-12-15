@@ -53,6 +53,10 @@ spec:
     targetRevision: 2.0.1
     helm:
       valuesObject:
+        image:
+          repository: ghcr.io/gethomepage/homepage
+          tag: v0.9.13
+
         config:
           settings:
             iconStyle: theme
