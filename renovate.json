@@ -5,8 +5,16 @@
   ],
   "enabledManagers": [
     "argocd",
+    "helm-values",
     "custom.regex"
   ],
+  "helm-values": {
+    "fileMatch": [
+      "apps/.*/*.\\.yaml",
+      "app\\.yaml$"
+    ],
+    "pinDigests": false
+  },
   "argocd": {
     "fileMatch": [
       "apps/.*/*.\\.yaml",
