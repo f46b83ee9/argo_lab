@@ -12,10 +12,5 @@ data:
         - CiliumIdentity
       clusters:
         - "*"
-  # - apiGroups:
-  #     - deviceplugin.intel.com
-  #   kinds:
-  #     - GpuDevicePlugin
-  #   clusters:
-  #     - "*"
   url: https://argocd.vfd.ovh
+  accounts.readonly: apiKey
