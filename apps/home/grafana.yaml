@@ -44,7 +44,7 @@ spec:
   source:
     chart: grafana
     repoURL: https://grafana.github.io/helm-charts
-    targetRevision: 8.8.1
+    targetRevision: 8.8.2
     helm:
       valuesObject:
         testFramework:
