@@ -24,7 +24,7 @@ spec:
   source:
     chart: victoria-metrics-single
     repoURL: https://victoriametrics.github.io/helm-charts/
-    targetRevision: 0.13.5
+    targetRevision: 0.13.8
 
   destination:
     server: "https://kubernetes.default.svc"
