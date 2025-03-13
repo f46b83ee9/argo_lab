@@ -31,7 +31,7 @@ spec:
           k8s.v1.cni.cncf.io/networks: '[ { "name": "macvlan", "namespace": "kube-system", "ips": [ "192.168.10.232" ] }]'
         image:
           repository: ghcr.io/music-assistant/server
-          tag: 2.3.6
+          tag: 2.4.4
         persistence:
           data:
             enabled: true
