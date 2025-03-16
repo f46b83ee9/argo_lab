@@ -24,7 +24,7 @@ spec:
   source:
     chart: music-assistant-server
     repoURL: https://lmatfy.github.io/charts
-    targetRevision: 0.1.5
+    targetRevision: 0.1.6
     helm:
       valuesObject:
         podAnnotations:
