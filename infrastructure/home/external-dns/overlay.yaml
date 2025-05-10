@@ -19,8 +19,8 @@ spec:
         - ingress
 
         extraArgs:
-        - --rfc2136-host=192.168.10.230
-        - --rfc2136-port=5353
+        - --rfc2136-host=bind9.bind.svc.cluster.local
+        - --rfc2136-port=53
         - --rfc2136-zone=vfd.ovh
         - --rfc2136-tsig-secret=$(RFC2136_SECRET)
         - --rfc2136-tsig-secret-alg=$(RFC2136_SECRET_ALG)
