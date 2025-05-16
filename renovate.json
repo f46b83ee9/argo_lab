@@ -9,24 +9,24 @@
     "custom.regex"
   ],
   "helm-values": {
-    "fileMatch": [
-      "apps/.*/*.\\.yaml",
-      "app\\.yaml$"
+    "managerFilePatterns": [
+      "/apps/.*/*.\\.yaml/",
+      "/app\\.yaml$/"
     ],
     "pinDigests": false
   },
   "argocd": {
-    "fileMatch": [
-      "apps/.*/*.\\.yaml",
-      "app\\.yaml$"
+    "managerFilePatterns": [
+      "/apps/.*/*.\\.yaml/",
+      "/app\\.yaml$/"
     ]
   },
   "customManagers": [
     {
       "customType": "regex",
       "datasourceTemplate": "github-tags",
-      "fileMatch": [
-        "^bootstrap/.*/argo-cd/kustomization\\.yaml$"
+      "managerFilePatterns": [
+        "/^bootstrap/.*/argo-cd/kustomization\\.yaml$/"
       ],
       "matchStrings": [
         "https://raw\\.githubusercontent\\.com/argoproj/argo-cd/v(?<currentValue>\\S+)/manifests/install\\.yaml"
@@ -35,7 +35,9 @@
       "versioningTemplate": "semver"
     }
   ],
-  "ignoreDeps": [ "https://github.com/kubernetes-csi/external-snapshotter.git" ],
+  "ignoreDeps": [
+    "https://github.com/kubernetes-csi/external-snapshotter.git"
+  ],
   "packageRules": [
     {
       "matchUpdateTypes": [
