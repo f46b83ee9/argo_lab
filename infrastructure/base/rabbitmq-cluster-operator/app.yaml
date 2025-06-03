@@ -24,7 +24,7 @@ spec:
   source:
     chart: rabbitmq-cluster-operator
     repoURL: https://charts.bitnami.com/bitnami
-    targetRevision: 4.4.11
+    targetRevision: 4.4.17
 
   destination:
     server: "https://kubernetes.default.svc"
