@@ -236,7 +236,11 @@ spec:
           name: homepage
 
         enableRbac: true
-
+        
+        env:
+          - name: HOMEPAGE_ALLOWED_HOSTS
+            value: home.vfd.ovh
+            
         envFrom:
         - secretRef:
             name: homepage-secret
