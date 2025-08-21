@@ -62,7 +62,7 @@ spec:
             - ha.vfd.ovh
         initContainers:
         - name: init-hacs
-          image: bash:5.2
+          image: bash:5.3
           command: ["bash", "-c", "cd /config && [[ ! -d /config/custom_components/hacs ]] && wget -O - https://get.hacs.xyz | bash - || exit 0"]
           volumeMounts:
           - mountPath: /config
