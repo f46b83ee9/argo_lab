@@ -55,7 +55,7 @@ spec:
       valuesObject:
         image:
           repository: ghcr.io/gethomepage/homepage
-          tag: v1.3.2
+          tag: v1.4.6
 
         config:
           settings:
