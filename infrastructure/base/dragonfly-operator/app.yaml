@@ -24,7 +24,7 @@ spec:
   source:
     chart: dragonfly-operator/helm/dragonfly-operator
     repoURL: ghcr.io/dragonflydb
-    targetRevision: v1.1.11
+    targetRevision: v1.2.1
 
   destination:
     server: "https://kubernetes.default.svc"
