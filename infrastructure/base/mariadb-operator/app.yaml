@@ -22,6 +22,38 @@ spec:
       selfHeal: true
 
   source:
+    chart: mariadb-operator-crds
+    repoURL: https://mariadb-operator.github.io/mariadb-operator
+    targetRevision: 25.8.3
+
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: mariadb-operator
+---
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mariadb-operator
+  namespace: argocd
+spec:
+  project: infrastructure
+
+  ignoreDifferences:
+  - group: argoproj.io
+    jsonPointers:
+    - /status
+    kind: Application
+
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    automated:
+      allowEmpty: true
+      prune: true
+      selfHeal: true
+
+  source:
     chart: mariadb-operator
     repoURL: https://mariadb-operator.github.io/mariadb-operator
     targetRevision: 25.8.3
