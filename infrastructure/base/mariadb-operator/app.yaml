@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: mariadb-operator
+  name: mariadb-operator-crds
   namespace: argocd
 spec:
   project: infrastructure
