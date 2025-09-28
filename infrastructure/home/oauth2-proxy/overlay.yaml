@@ -19,6 +19,7 @@ spec:
             code_challenge_method = "S256"
             skip_provider_button = true
             reverse_proxy = true
+            email_domains = [ "*" ]
             whitelist_domains = [ "*.vfd.ovh" ]
           
         ingress: 
