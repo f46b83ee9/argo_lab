@@ -1,0 +1,34 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: oauth2-proxy
+  namespace: argocd
+spec:
+  source:
+    helm:
+      valuesObject:
+        config:
+          existingSecret: oauth2-secret
+          configFile: |
+            provider = "oidc"
+            provider_display_name = "PocketID"
+            redirect_url = "https://oidc.vfd.ovh/oauth2/callback"
+            oidc_issuer_url = "https://key.vfd.ovh"
+            scope = "openid email profile groups"
+            code_challenge_method = "S256"
+            skip_provider_button = true
+            reverse_proxy = true
+            whitelist_domains = [ "*.vfd.ovh" ]
+          
+        ingress: 
+          enabled: true
+          className: nginx
+          annotations:
+            cert-manager.io/cluster-issuer: letsencrypt-prd
+          hosts:
+            - oidc.vfd.ovh
+          tls:
+            - hosts:
+                - oidc.vfd.ovh
+              secretName: oidc-vfd-tls
