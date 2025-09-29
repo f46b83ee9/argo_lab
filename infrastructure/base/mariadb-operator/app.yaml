@@ -56,7 +56,7 @@ spec:
   source:
     chart: mariadb-operator
     repoURL: https://mariadb-operator.github.io/mariadb-operator
-    targetRevision: 25.8.3
+    targetRevision: 25.8.4
 
   destination:
     server: "https://kubernetes.default.svc"
