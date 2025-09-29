@@ -15,8 +15,11 @@ spec:
             provider_display_name = "PocketID"
             redirect_url = "https://oidc.vfd.ovh/oauth2/callback"
             oidc_issuer_url = "https://key.vfd.ovh"
+            code_challenge_method = "S256"
             scope = "openid email profile groups"
             cookie_domains = [ ".vfd.ovh" ]
+            cookie_name = "_oauth2_proxy"
+            cookie_csrf_per_request = true
             skip_provider_button = true
             reverse_proxy = true
             email_domains = [ "*" ]
