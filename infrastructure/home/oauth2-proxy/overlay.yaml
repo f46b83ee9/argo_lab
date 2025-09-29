@@ -17,7 +17,7 @@ spec:
             oidc_issuer_url = "https://key.vfd.ovh"
             scope = "openid email profile groups"
             code_challenge_method = "S256"
-            cookie_domain = [ "vfd.ovh" ]
+            cookie_domains = [ ".vfd.ovh" ]
             skip_provider_button = true
             reverse_proxy = true
             email_domains = [ "*" ]
