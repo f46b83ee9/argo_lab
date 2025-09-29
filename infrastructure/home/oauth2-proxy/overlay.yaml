@@ -23,6 +23,7 @@ spec:
             skip_provider_button = true
             reverse_proxy = true
             pass_user_headers = true
+            set_xauthrequest = true
             email_domains = [ "*" ]
             whitelist_domains = [ "*.vfd.ovh" ]
           
