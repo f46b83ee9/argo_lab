@@ -22,6 +22,7 @@ spec:
             cookie_csrf_per_request = true
             skip_provider_button = true
             reverse_proxy = true
+            pass_user_headers = true
             email_domains = [ "*" ]
             whitelist_domains = [ "*.vfd.ovh" ]
           
