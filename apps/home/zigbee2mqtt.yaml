@@ -43,7 +43,7 @@ spec:
   source:
     chart: zigbee2mqtt
     repoURL: https://charts.zigbee2mqtt.io/
-    targetRevision: 2.6.1
+    targetRevision: 2.6.2
     helm:
       valuesObject:
         service:
