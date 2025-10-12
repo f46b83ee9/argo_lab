@@ -107,6 +107,10 @@ spec:
               entities:
                 remote.shield_remote:
                   hidden: false
+                  
+            auth_oidc:
+              client_id: "cd3ffef8-bd42-42b2-a886-f66d9d856929"
+              discovery_url: "https://key.vfd.ovh/.well-known/openid-configuration"     
 
             prometheus:
               namespace: hass
@@ -132,7 +136,7 @@ spec:
                 exclude_entities:
                   - sensor.date
                   - sensor.last_boot
-                  - sun.sun              
+                  - sun.sun      
 
             frontend:
               themes: !include_dir_merge_named themes
