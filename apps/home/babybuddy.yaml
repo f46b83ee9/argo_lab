@@ -41,7 +41,7 @@ spec:
                   PUID: 1000
                   PGID: 1000
                   ALLOWED_HOSTS: "babybuddy.vfd.ovh"
-                  CSRF_TRUSTED_ORIGINS: "http://babybuddy.vfd.ovh,https://babybuddy.vfd.ovh"
+                  CSRF_TRUSTED_ORIGINS: "http://babybuddy.vfd.ovh,https://babybuddy.vfd.ovh,http://babybuddy-test.vfd.ovh,https://babybuddy-test.vfd.ovh"
                   CSRF_COOKIE_SECURE: true
                   SECURE_PROXY_SSL_HEADER: true
                   SESSION_COOKIE_SECURE: true
