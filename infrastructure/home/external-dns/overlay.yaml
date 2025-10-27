@@ -17,6 +17,11 @@ spec:
         sources:
         - service
         - ingress
+        - gateway-httproute
+        - gateway-grpcroute
+        - gateway-tlsroute
+        - gateway-tcproute
+        - gateway-udproute
 
         extraArgs:
         - --rfc2136-host=bind9.bind.svc.cluster.local
