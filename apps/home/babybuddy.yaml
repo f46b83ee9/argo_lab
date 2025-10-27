@@ -40,7 +40,7 @@ spec:
                   TZ: "Europe/Paris"
                   PUID: 1000
                   PGID: 1000
-                  ALLOWED_HOSTS: "babybuddy.vfd.ovh"
+                  ALLOWED_HOSTS: "babybuddy.vfd.ovh, babybuddy-test.vfd.ovh"
                   CSRF_TRUSTED_ORIGINS: "http://babybuddy.vfd.ovh,https://babybuddy.vfd.ovh,http://babybuddy-test.vfd.ovh,https://babybuddy-test.vfd.ovh"
                   CSRF_COOKIE_SECURE: true
                   SECURE_PROXY_SSL_HEADER: true
