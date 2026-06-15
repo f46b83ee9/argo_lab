@@ -24,7 +24,7 @@ spec:
   source:
     chart: emqx-operator
     repoURL: https://repos.emqx.io/charts
-    targetRevision: 2.2.29
+    targetRevision: 2.3.2
 
   destination:
     server: "https://kubernetes.default.svc"
