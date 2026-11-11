@@ -24,7 +24,7 @@ spec:
   source:
     chart: rke2-multus
     repoURL: https://rke2-charts.rancher.io
-    targetRevision: v4.2.205
+    targetRevision: 4.3.119
     helm:
       valuesObject:
         config:
